@@ -15,9 +15,7 @@ The master branch is the starting point, and doesn't actually have much of use o
 
 The standard branch holds the starting point for the discussion, what I consider to be the "standard" way of building an Android app. This version of the app is build according to most tutorials and documented examples that are available. This includes the Android version of and MVC architecture with very prominent Activities and Fragments that handle much of the view and business logic for the app. It also includes using Loaders for data loading and maybe even an AsyncTask or two. Some great tools can be included in this type of archictecture, including Dagger and RxAndroid to name just a couple.
 
-This style of application works well. There are countless wonderful apps built in this way, including most of the apps that I have built or worked on. But it presents a few challenges. Primarily, Android is notoriously difficult to test because so much is wrapped up in components that require instrumentation. If you're like me you use this as a really great excuse: 
-*"I would love to unit test my app, but you just can't unit test Android."*
-Developer absolved!
+This style of application works well. There are countless wonderful apps built in this way, including most of the apps that I have built or worked on. But it presents a few challenges. Primarily, Android is notoriously difficult to test because so much is wrapped up in components that require instrumentation. If you're like me you use this as a really great excuse: <br />*"I would love to unit test my app, but you just can't unit test Android."* <br />Developer absolved!
 
 ####MVPI
 
@@ -37,6 +35,10 @@ For version numbers and build variant usage see app/build.gradle
 |                      |             |                                                                             |
 |                      |             |                                                                             |
 
+To Do ;)
+
+API Used In the App
+---
 To Do ;)
 
 AndroidStudio and Gradle
