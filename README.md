@@ -4,18 +4,17 @@ This project is meant to support a Code Camp talk on one effective method for im
 
 Branches
 ---
-
 The project is broken up into a couple of branches for the purpose of demonstration. 
 
 ####Master
-
 The master branch is the starting point, and doesn't actually have much of use other than a bare project and this README. Maybe at some point one of the other branches will be merged into master, but for now it will be kept separate.
 
 ####Standard
-
 The standard branch holds the starting point for the discussion, what I consider to be the "standard" way of building an Android app. This version of the app is build according to most tutorials and documented examples that are available. This includes the Android version of and MVC architecture with very prominent Activities and Fragments that handle much of the view and business logic for the app. It also includes using Loaders for data loading and maybe even an AsyncTask or two. Some great tools can be included in this type of archictecture, including Dagger and RxAndroid to name just a couple.
 
-This style of application works well. There are countless wonderful apps built in this way, including most of the apps that I have built or worked on. But it presents a few challenges. Primarily, Android is notoriously difficult to test because so much is wrapped up in components that require instrumentation. If you're like me you use this as a really great excuse: <br />*"I would love to unit test my app, but you just can't unit test Android."* <br />Developer absolved!
+This style of application works well. There are countless wonderful apps built in this way, including most of the apps that I have built or worked on. But it presents a few challenges. Primarily, Android is notoriously difficult to test because so much is wrapped up in components that require instrumentation. If you're like me you use this as a really great excuse:  
+*"I would love to unit test my app, but you just can't unit test Android."*  
+Developer absolved!
 
 ####MVPI
 
@@ -27,26 +26,25 @@ But the result is that much of the infrastructure can now be either agnostic of 
 
 Dependencies
 ---
-
 For version numbers and build variant usage see app/build.gradle
 
-| Name                 | Provider    | Summary                                                                     |
-|:--------------------:|:-----------:|:---------------------------------------------------------------------------:|
-|                      |             |                                                                             |
-|                      |             |                                                                             |
-
-To Do ;)
+| Name                 | Provider    | Summary |
+|:--------------------:|:-----------:|:-------:|
+| J-Unit               |             | Support for java unit testing |
+| Android Appcompat v7 | Google      | Backwards compatibility library |
 
 API Used In the App
 ---
-To Do ;)
+This app uses the Demographic Statistics by Zip Code api provided by New York City. API documentation is found [here] (https://dev.socrata.com/foundry/data.cityofnewyork.us/rreq-n6zk). 
+
+The app will require an app token, which can be obtained by going to that page. Once there you will need to create an account, then set up an application. This key should go into string resources named *app_token*.
+
+This api provides a fairly diverse set of data points for each of the zip codes within the boundaries of NYC. It's simple data, general consisting of a field name and a numeric value. This allows us to focus a lot more on the app and its architecture than on working with complex data in an example app.
 
 AndroidStudio and Gradle
 ---
-
 This project was set up on Android Studio 2.0 and using Gradle 2.8, but should work with most current versions of either
 
 Presentation Slides
 ---
-
 To Do ;)
