@@ -33,6 +33,7 @@ captures/
 
 .idea/workspace.xml
 .idea/libraries
+.idea/codeStyleSettings.xml
 *.iml
 *.original
 
