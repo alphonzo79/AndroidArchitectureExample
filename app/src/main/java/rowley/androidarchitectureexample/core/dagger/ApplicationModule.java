@@ -7,6 +7,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import rowley.androidarchitectureexample.ExampleApplication;
+import rowley.androidarchitectureexample.core.io.network.NetworkRequestHelper;
 
 /**
  * Main application module for injecting dependencies into the app.
@@ -23,5 +24,11 @@ public class ApplicationModule {
     @Singleton
     public Context provideApplicationContext() {
         return application;
+    }
+    
+    @Provides
+    @Singleton
+    public NetworkRequestHelper provideNetworkRequestHelper() {
+        return new NetworkRequestHelper();
     }
 }
