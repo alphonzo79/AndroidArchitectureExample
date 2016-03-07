@@ -1,0 +1,227 @@
+{
+  "count_participants": {
+    "sortOrder":0,
+    "displayName":"Total Participants - Count",
+    "isPercentage":false
+  },
+  "count_ethnicity_total": {
+    "sortOrder":1,
+    "displayName":"Ethnicity - Total Responded",
+    "isPercentage":false
+  },
+  "percent_ethnicity_total": {
+    "sortOrder":2,
+    "displayName":"Ethnicity - Percent Responded",
+    "isPercentage":true
+  },
+  "count_american_indian": {
+    "sortOrder":3,
+    "displayName":"American Indian - Count",
+    "isPercentage":false
+  },
+  "percent_american_indian": {
+    "sortOrder":4,
+    "displayName":"American Indian - Percentage",
+    "isPercentage":true
+  },
+  "count_asian_non_hispanic": {
+    "sortOrder":5,
+    "displayName":"Asian Non-Hispanic - Count",
+    "isPercentage":false
+  },
+  "percent_asian_non_hispanic": {
+    "sortOrder":6,
+    "displayName":"Asian Non-Hispanic - Percentage",
+    "isPercentage":true
+  },
+  "count_black_non_hispanic": {
+    "sortOrder":7,
+    "displayName":"Black Non-Hispanic - Count",
+    "isPercentage":false
+  },
+  "percent_black_non_hispanic": {
+    "sortOrder":8,
+    "displayName":"Black Non-Hispanic - Percentage",
+    "isPercentage":true
+  },
+  "count_hispanic_latino": {
+    "sortOrder":9,
+    "displayName":"Hispanic Latino - Count",
+    "isPercentage":false
+  },
+  "percent_hispanic_latino": {
+    "sortOrder":10,
+    "displayName":"Hispanic Latino - Percentage",
+    "isPercentage":true
+  },
+  "count_pacific_islander": {
+    "sortOrder":11,
+    "displayName":"Pacific Islander - Count",
+    "isPercentage":false
+  },
+  "percent_pacific_islander": {
+    "sortOrder":12,
+    "displayName":"Pacific Islander - Percentage",
+    "isPercentage":true
+  },
+  "count_white_non_hispanic": {
+    "sortOrder":13,
+    "displayName":"White Non-Hispanic - Count",
+    "isPercentage":false
+  },
+  "percent_white_non_hispanic": {
+    "sortOrder":14,
+    "displayName":"White Non-Hispanic - Percentage",
+    "isPercentage":true
+  },
+  "count_other_ethnicity": {
+    "sortOrder":15,
+    "displayName":"Ethnicity Other - Count",
+    "isPercentage":false
+  },
+  "percent_other_ethnicity": {
+    "sortOrder":16,
+    "displayName":"Ethnicity Other - Percentage",
+    "isPercentage":true
+  },
+  "count_ethnicity_unknown": {
+    "sortOrder":17,
+    "displayName":"Ethnicity Unknown - Count",
+    "isPercentage":false
+  },
+  "percent_ethnicity_unknown": {
+    "sortOrder":18,
+    "displayName":"Ethnicity Unknown - Percentage",
+    "isPercentage":true
+  },
+  "count_citizen_status_total": {
+    "sortOrder":19,
+    "displayName":"Citizen Status - Total Responded",
+    "isPercentage":false
+  },
+  "percent_citizen_status_total": {
+    "sortOrder":20,
+    "displayName":"Citizen Status - Percent Responded",
+    "isPercentage":true
+  },
+  "count_us_citizen": {
+    "sortOrder":21,
+    "displayName":"US Citizen - Count",
+    "isPercentage":false
+  },
+  "percent_us_citizen": {
+    "sortOrder":22,
+    "displayName":"US Citizen - Percentage",
+    "isPercentage":true
+  },
+  "count_permanent_resident_alien": {
+    "sortOrder":23,
+    "displayName":"Resident Alien - Count",
+    "isPercentage":false
+  },
+  "percent_permanent_resident_alien": {
+    "sortOrder":24,
+    "displayName":"Resident Alien - Percentage",
+    "isPercentage":true
+  },
+  "count_other_citizen_status": {
+    "sortOrder":25,
+    "displayName":"Citizen Status Other - Count",
+    "isPercentage":false
+  },
+  "percent_other_citizen_status": {
+    "sortOrder":26,
+    "displayName":"Citizen Status Other - Percentage",
+    "isPercentage":true
+  },
+  "count_citizen_status_unknown": {
+    "sortOrder":27,
+    "displayName":"Citizen Status Unknown - Count",
+    "isPercentage":false
+  },
+  "percent_citizen_status_unknown": {
+    "sortOrder":28,
+    "displayName":"Citizen Status Unknown - Percentage",
+    "isPercentage":true
+  },
+  "count_gender_total": {
+    "sortOrder":29,
+    "displayName":"Gender - Total Responded",
+    "isPercentage":false
+  },
+  "percent_gender_total": {
+    "sortOrder":30,
+    "displayName":"Gender - Percent Responded",
+    "isPercentage":true
+  },
+  "count_female": {
+    "sortOrder":31,
+    "displayName":"Gender Female - Count",
+    "isPercentage":false
+  },
+  "percent_female": {
+    "sortOrder":32,
+    "displayName":"Gender Female - Percentage",
+    "isPercentage":true
+  },
+  "count_male": {
+    "sortOrder":33,
+    "displayName":"Gender Male - Count",
+    "isPercentage":false
+  },
+  "percent_male": {
+    "sortOrder":34,
+    "displayName":"Gender Male - Percentage",
+    "isPercentage":true
+  },
+  "count_gender_unknown": {
+    "sortOrder":35,
+    "displayName":"Gender Unknown - Count",
+    "isPercentage":false
+  },
+  "percent_gender_unknown": {
+    "sortOrder":36,
+    "displayName":"Gender Unknown - Percentage",
+    "isPercentage":true
+  },
+  "count_public_assistance_total": {
+    "sortOrder":37,
+    "displayName":"Public Assistance - Total Responded",
+    "isPercentage":false
+  },
+  "percent_public_assistance_total": {
+    "sortOrder":38,
+    "displayName":"Public Assistance - Percent Responded",
+    "isPercentage":true
+  },
+  "count_receives_public_assistance": {
+    "sortOrder":39,
+    "displayName":"Receives Public Assistance - Count",
+    "isPercentage":false
+  },
+  "percent_receives_public_assistance": {
+    "sortOrder":40,
+    "displayName":"Receives Public Assistance - Percentage",
+    "isPercentage":true
+  },
+  "count_nreceives_public_assistance": {
+    "sortOrder":41,
+    "displayName":"Does Not Receive Public Assistance - Count",
+    "isPercentage":false
+  },
+  "percent_nreceives_public_assistance": {
+    "sortOrder":42,
+    "displayName":"Does Not Receive Public Assistance - Percentage",
+    "isPercentage":true
+  },
+  "count_public_assistance_unknown": {
+    "sortOrder":43,
+    "displayName":"Public Assistance Unknown - Count",
+    "isPercentage":false
+  },
+  "percent_public_assistance_unknown": {
+    "sortOrder":44,
+    "displayName":"Public Assistance Unknown - Percentage",
+    "isPercentage":true
+  }
+}
