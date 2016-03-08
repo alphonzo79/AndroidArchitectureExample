@@ -25,8 +25,8 @@ public class DaggerInjector {
 
     private DaggerInjector() {}
 
-    public void setUpComponent(ApplicationModule applicationModule) {
-        applicationComponent = DaggerApplicationComponent.builder().applicationModule(applicationModule).build();
+    public void setApplicationComponent(ApplicationComponent applicationComponent) {
+        this.applicationComponent = applicationComponent;
     }
 
     public ApplicationComponent getApplicationComponent() {

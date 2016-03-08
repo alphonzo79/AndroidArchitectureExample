@@ -12,18 +12,15 @@ import android.util.Log;
 public abstract class BaseDBHelper extends SQLiteOpenHelper {
     private final String TAG = BaseDBHelper.class.getSimpleName();
 
-    private static final String DATABASE_NAME = "AndroidArchExampleDB";
-    private static final int VERSION = 1;
-
-    private final String NYC_DEMOGRAPHIC_DATA = "NYC_Demographic_Data";
+    protected final String NYC_DEMOGRAPHIC_DATA_TABLE = "NYC_Demographic_Data";
     protected final String NYC_DEMO_DATA_ZIP_CODE_COLUMN = "ZipCode";
     protected final String NYC_DEMO_DATA_JSON = "Json";
-    private final String BUILD_NYC_DEMO_DATA_TABLE =  "CREATE TABLE IF NOT EXISTS " + NYC_DEMOGRAPHIC_DATA +
+    private final String BUILD_NYC_DEMO_DATA_TABLE =  "CREATE TABLE IF NOT EXISTS " + NYC_DEMOGRAPHIC_DATA_TABLE +
             " (_id INTEGER AUTO INCREMENT, " + NYC_DEMO_DATA_ZIP_CODE_COLUMN +
             "INTEGER PRIMARY KEY, " + NYC_DEMO_DATA_JSON + " TEXT);";
 
-    public BaseDBHelper(Context context) {
-        super(context, DATABASE_NAME, null, VERSION);
+    public BaseDBHelper(Context context, IDatabaseConfig config) {
+        super(context, config.getDatabaseName(), null, config.getDatabaseVersion());
     }
 
     @Override

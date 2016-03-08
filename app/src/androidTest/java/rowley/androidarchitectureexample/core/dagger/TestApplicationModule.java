@@ -10,42 +10,43 @@ import rowley.androidarchitectureexample.ExampleApplication;
 import rowley.androidarchitectureexample.core.io.local.IDatabaseConfig;
 import rowley.androidarchitectureexample.core.io.local.StandardDatabaseConfig;
 import rowley.androidarchitectureexample.core.io.network.NetworkRequestHelper;
+import rowley.androidarchitectureexample.io.local.TestDatabaseConfig;
 import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataNetworkDao;
 import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataSqliteDao;
 
 /**
- * Main application module for injecting dependencies into the app.
+ * Module for injecting test components into instrumented tests
  */
 @Module
-public class ApplicationModule {
-    private ExampleApplication application;
+public class TestApplicationModule {
+    private ApplicationModule standardModule;
 
-    public ApplicationModule(ExampleApplication application) {
-        this.application = application;
+    public TestApplicationModule(ApplicationModule standardModule) {
+        this.standardModule = standardModule;
     }
 
     @Provides
     @Singleton
     public Context provideApplicationContext() {
-        return application;
+        return standardModule.provideApplicationContext();
     }
 
     @Provides
     @Singleton
     public ExampleApplication provideExampleApplication() {
-        return application;
+        return standardModule.provideExampleApplication();
     }
-    
+
     @Provides
     @Singleton
     public NetworkRequestHelper provideNetworkRequestHelper() {
-        return new NetworkRequestHelper();
+        return standardModule.provideNetworkRequestHelper();
     }
 
     @Provides
     @Singleton
     public IDatabaseConfig providesIDatabaseConfig() {
-        return new StandardDatabaseConfig();
+        return new TestDatabaseConfig();
     }
 
     @Provides
@@ -58,6 +59,6 @@ public class ApplicationModule {
     @Provides
     @Singleton
     public ZipCodeDemographicDataNetworkDao provideZipCodeDemographicDataNetworkDao() {
-        return new ZipCodeDemographicDataNetworkDao();
+        return standardModule.provideZipCodeDemographicDataNetworkDao();
     }
 }

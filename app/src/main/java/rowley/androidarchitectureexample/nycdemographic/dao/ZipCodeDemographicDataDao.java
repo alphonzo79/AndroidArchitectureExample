@@ -23,8 +23,8 @@ public interface ZipCodeDemographicDataDao {
     /**
      * Retrieve data for the provided zip code.
      * @param zipCode - the zip code you would like data for
-     * @return - The demographic data for the given zip code. If the zip code is uknown, the object shall NOT be null, but may
-     * contain an empty data set
+     * @return - The demographic data for the given zip code or null. If the zip code is uknown, the object
+     * may be null, or it may be null but contain an empty data set
      */
     ZipCodeDataModel getDataForZipCode(String zipCode);
 }
