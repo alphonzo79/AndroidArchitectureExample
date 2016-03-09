@@ -6,6 +6,7 @@ import android.net.NetworkInfo;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
@@ -23,9 +24,15 @@ import rowley.androidarchitectureexample.core.io.request.DataRequest;
 public class NetworkRequestHelper {
     private final String TAG = NetworkRequestHelper.class.getSimpleName();
 
-    public JsonObject sendRequestAndWait(DataRequest requestParams, Context context) {
+    private Context context;
+
+    public NetworkRequestHelper(Context context) {
+        this.context = context;
+    }
+
+    public JsonArray sendRequestAndWait(DataRequest requestParams) {
         String resultString = null;
-        JsonObject result = null;
+        JsonArray result = null;
 
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
@@ -69,7 +76,7 @@ public class NetworkRequestHelper {
 
                 if(!TextUtils.isEmpty(resultString)) {
                     JsonParser parser = new JsonParser();
-                    result = parser.parse(resultString).getAsJsonObject();
+                    result = parser.parse(resultString).getAsJsonArray();
                 }
             } catch(IOException e) {
                 e.printStackTrace();

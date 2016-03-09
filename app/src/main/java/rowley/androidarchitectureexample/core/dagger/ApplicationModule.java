@@ -7,6 +7,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import rowley.androidarchitectureexample.ExampleApplication;
+import rowley.androidarchitectureexample.R;
 import rowley.androidarchitectureexample.core.io.local.IDatabaseConfig;
 import rowley.androidarchitectureexample.core.io.local.StandardDatabaseConfig;
 import rowley.androidarchitectureexample.core.io.network.NetworkRequestHelper;
@@ -38,8 +39,8 @@ public class ApplicationModule {
     
     @Provides
     @Singleton
-    public NetworkRequestHelper provideNetworkRequestHelper() {
-        return new NetworkRequestHelper();
+    public NetworkRequestHelper provideNetworkRequestHelper(Context context) {
+        return new NetworkRequestHelper(context);
     }
 
     @Provides
@@ -57,7 +58,7 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    public ZipCodeDemographicDataNetworkDao provideZipCodeDemographicDataNetworkDao() {
-        return new ZipCodeDemographicDataNetworkDao();
+    public ZipCodeDemographicDataNetworkDao provideZipCodeDemographicDataNetworkDao(NetworkRequestHelper networkRequestHelper) {
+        return new ZipCodeDemographicDataNetworkDao(networkRequestHelper, application.getString(R.string.app_token));
     }
 }
