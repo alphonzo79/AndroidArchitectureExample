@@ -64,7 +64,7 @@ public class ZipCodeDemographicDataSqliteDao extends BaseDBHelper implements Zip
         SQLiteDatabase db = getReadableDatabase();
 
         Cursor cursor = db.query(NYC_DEMOGRAPHIC_DATA_TABLE,
-                new String[] {NYC_DEMO_DATA_JSON}, null, null, null, null, NYC_DEMO_DATA_ZIP_CODE_COLUMN + " ASC");
+                new String[] {NYC_DEMO_DATA_JSON_COLUMN}, null, null, null, null, NYC_DEMO_DATA_ZIP_CODE_COLUMN + " ASC");
         if(cursor != null) {
             try {
                 while(cursor.moveToNext()) {
@@ -87,16 +87,34 @@ public class ZipCodeDemographicDataSqliteDao extends BaseDBHelper implements Zip
     }
 
     public boolean saveDataForZipCodes(List<ZipCodeDataModel> data) {
-        boolean success = true;
+        boolean success = false;
 
         if(data != null && !data.isEmpty()) {
-            for(ZipCodeDataModel model : data) {
-                if(!saveDataForZipCode(model)) {
-                    success = false;
+            SQLiteDatabase db = getWritableDatabase();
+
+            db.beginTransaction();
+            SQLiteStatement stmt = null;
+
+            try {
+                for(ZipCodeDataModel model : data) {
+                    stmt = getSaveStatement(model, db);
+                    stmt.execute();
+                    stmt.clearBindings();
+                    stmt.close();
+                }
+                db.setTransactionSuccessful();
+                success = true;
+            } catch (SQLiteException e) {
+                Log.e(TAG, e.getMessage(), e);
+            } finally {
+                db.endTransaction();
+                if(stmt != null) {
+                    stmt.clearBindings();
+                    stmt.close();
                 }
             }
-        } else {
-            success = false;
+
+            db.close();
         }
 
         return success;
@@ -104,12 +122,15 @@ public class ZipCodeDemographicDataSqliteDao extends BaseDBHelper implements Zip
 
     @Override
     public ZipCodeDataModel getDataForZipCode(String zipCode) {
+        SQLiteDatabase db = getReadableDatabase();
+        return getDataForZipCode(zipCode, db);
+    }
+
+    private ZipCodeDataModel getDataForZipCode(String zipCode, SQLiteDatabase db) {
         ZipCodeDataModel result = null;
 
-        SQLiteDatabase db = getReadableDatabase();
-
         Cursor cursor = db.query(NYC_DEMOGRAPHIC_DATA_TABLE,
-                new String[] {NYC_DEMO_DATA_JSON}, NYC_DEMO_DATA_ZIP_CODE_COLUMN + "=?", new String[] {zipCode}, null, null, NYC_DEMO_DATA_ZIP_CODE_COLUMN + " ASC");
+                new String[] {NYC_DEMO_DATA_JSON_COLUMN}, NYC_DEMO_DATA_ZIP_CODE_COLUMN + "=?", new String[] {zipCode}, null, null, NYC_DEMO_DATA_ZIP_CODE_COLUMN + " ASC");
         if(cursor != null) {
             try {
                 while(cursor.moveToNext()) {
@@ -125,8 +146,6 @@ public class ZipCodeDemographicDataSqliteDao extends BaseDBHelper implements Zip
             }
         }
 
-        db.close();
-
         return result;
     }
 
@@ -134,26 +153,12 @@ public class ZipCodeDemographicDataSqliteDao extends BaseDBHelper implements Zip
         boolean success = false;
 
         if(data != null && !TextUtils.isEmpty(data.getJurisdictionName())) {
-            String zipCode = data.getJurisdictionName();
-            ZipCodeDataModel foundModel = getDataForZipCode(zipCode);
-
-            SQLiteStatement stmt = null;
             SQLiteDatabase db = getWritableDatabase();
+
             db.beginTransaction();
+            SQLiteStatement stmt = getSaveStatement(data, db);
 
             try {
-                if(foundModel != null) {
-                    stmt = db.compileStatement("UPDATE " + NYC_DEMOGRAPHIC_DATA_TABLE + " SET " +
-                            NYC_DEMO_DATA_JSON + "=? WHERE " + NYC_DEMO_DATA_ZIP_CODE_COLUMN + "=?;");
-                    stmt.bindString(1, gson.toJson(data));
-                    stmt.bindLong(2, Integer.valueOf(zipCode));
-                } else {
-                    stmt = db.compileStatement("INTERT INTO " + NYC_DEMOGRAPHIC_DATA_TABLE +
-                            " (" + NYC_DEMO_DATA_ZIP_CODE_COLUMN + ", " + NYC_DEMO_DATA_JSON + ") VALUES (?, ?);");
-                    stmt.bindLong(1, Integer.valueOf(zipCode));
-                    stmt.bindString(2, gson.toJson(data));
-                }
-
                 stmt.execute();
                 db.setTransactionSuccessful();
                 success = true;
@@ -166,8 +171,34 @@ public class ZipCodeDemographicDataSqliteDao extends BaseDBHelper implements Zip
                     stmt.close();
                 }
             }
+
+            db.close();
         }
 
         return success;
+    }
+
+    private SQLiteStatement getSaveStatement(ZipCodeDataModel data, SQLiteDatabase db) {
+        SQLiteStatement stmt;
+
+        ZipCodeDataModel foundModel = getDataForZipCode(data.getJurisdictionName(), db);
+
+        if(foundModel != null) {
+            stmt = db.compileStatement("UPDATE " + NYC_DEMOGRAPHIC_DATA_TABLE + " SET " +
+                    NYC_DEMO_DATA_JSON_COLUMN + "=? WHERE " + NYC_DEMO_DATA_ZIP_CODE_COLUMN + "=?;");
+            stmt.bindString(1, data.getOriginalJson());
+            stmt.bindLong(2, Integer.valueOf(data.getJurisdictionName()));
+        } else {
+            stmt = db.compileStatement("INSERT INTO " + NYC_DEMOGRAPHIC_DATA_TABLE +
+                    " (" + NYC_DEMO_DATA_ZIP_CODE_COLUMN + ", " + NYC_DEMO_DATA_JSON_COLUMN + ") VALUES (?, ?);");
+            stmt.bindLong(1, Integer.valueOf(data.getJurisdictionName()));
+            stmt.bindString(2, data.getOriginalJson());
+        }
+
+        return stmt;
+    }
+
+    public Gson getGson() {
+        return gson;
     }
 }

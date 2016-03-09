@@ -14,10 +14,10 @@ public abstract class BaseDBHelper extends SQLiteOpenHelper {
 
     protected final String NYC_DEMOGRAPHIC_DATA_TABLE = "NYC_Demographic_Data";
     protected final String NYC_DEMO_DATA_ZIP_CODE_COLUMN = "ZipCode";
-    protected final String NYC_DEMO_DATA_JSON = "Json";
+    protected final String NYC_DEMO_DATA_JSON_COLUMN = "Json";
     private final String BUILD_NYC_DEMO_DATA_TABLE =  "CREATE TABLE IF NOT EXISTS " + NYC_DEMOGRAPHIC_DATA_TABLE +
             " (_id INTEGER AUTO INCREMENT, " + NYC_DEMO_DATA_ZIP_CODE_COLUMN +
-            "INTEGER PRIMARY KEY, " + NYC_DEMO_DATA_JSON + " TEXT);";
+            " INTEGER PRIMARY KEY, " + NYC_DEMO_DATA_JSON_COLUMN + " TEXT);";
 
     public BaseDBHelper(Context context, IDatabaseConfig config) {
         super(context, config.getDatabaseName(), null, config.getDatabaseVersion());
@@ -40,5 +40,17 @@ public abstract class BaseDBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //do nothing in V1
+    }
+
+    public String getNycDemogragicDataTableName() {
+        return NYC_DEMOGRAPHIC_DATA_TABLE;
+    }
+
+    public String getNycDemographicDataZipCodeColumnName() {
+        return NYC_DEMO_DATA_ZIP_CODE_COLUMN;
+    }
+
+    public String getNycDemographicDataJsonColumnName() {
+        return NYC_DEMO_DATA_JSON_COLUMN;
     }
 }

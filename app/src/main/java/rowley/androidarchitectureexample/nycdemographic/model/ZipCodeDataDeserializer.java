@@ -47,6 +47,7 @@ public class ZipCodeDataDeserializer implements JsonDeserializer<ZipCodeDataMode
         JsonObject obj = json.getAsJsonObject();
         if(obj.has(ZIP_CODE_NAME)) {
             result.setJurisdictionName(obj.get(ZIP_CODE_NAME).getAsString());
+            result.setOriginalJson(json.toString());
         }
 
         Set<Map.Entry<String, JsonElement>> entrySet = obj.entrySet();
@@ -69,7 +70,11 @@ public class ZipCodeDataDeserializer implements JsonDeserializer<ZipCodeDataMode
                 model.setDisplayName(guide.get(key).getDisplayName());
                 if(guide.get(key).isPercentage()) {
                     float percent = Float.valueOf(obj.get(key).getAsString());
-                    int percentInt = (int) percent * 100;
+                    int percentInt = (int) (percent * 100);
+                    //For some reason the server returns "100" for 100%, but "0.45" for 45%
+                    if(percent >= 1) {
+                        percentInt = (int) percent;
+                    }
                     model.setDisplayValue(percentInt + "%");
                 } else {
                     model.setDisplayValue(obj.get(key).getAsString());

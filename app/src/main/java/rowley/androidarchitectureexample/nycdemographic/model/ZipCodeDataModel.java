@@ -12,6 +12,7 @@ import java.util.List;
 public class ZipCodeDataModel implements Parcelable {
     private String jurisdictionName;
     private List<ZipCodeDemographicDataModel> data;
+    private String originalJson;
 
     public ZipCodeDataModel() {
 
@@ -21,6 +22,7 @@ public class ZipCodeDataModel implements Parcelable {
         jurisdictionName = in.readString();
         data = new ArrayList<>();
         in.readTypedList(data, ZipCodeDemographicDataModel.CREATOR);
+        originalJson = in.readString();
     }
 
     public static final Creator<ZipCodeDataModel> CREATOR = new Creator<ZipCodeDataModel>() {
@@ -51,6 +53,14 @@ public class ZipCodeDataModel implements Parcelable {
         this.data = data;
     }
 
+    public String getOriginalJson() {
+        return originalJson;
+    }
+
+    public void setOriginalJson(String originalJson) {
+        this.originalJson = originalJson;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -60,5 +70,6 @@ public class ZipCodeDataModel implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(jurisdictionName);
         dest.writeTypedList(data);
+        dest.writeString(originalJson);
     }
 }
