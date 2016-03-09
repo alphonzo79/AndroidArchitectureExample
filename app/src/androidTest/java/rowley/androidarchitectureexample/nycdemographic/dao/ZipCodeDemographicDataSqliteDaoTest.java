@@ -4,8 +4,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteStatement;
-import android.text.TextUtils;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +14,6 @@ import rowley.androidarchitectureexample.SimpleActivityTestBase;
 import rowley.androidarchitectureexample.core.dagger.DaggerInjector;
 import rowley.androidarchitectureexample.core.dagger.TestApplicationComponent;
 import rowley.androidarchitectureexample.nycdemographic.model.ZipCodeDataModel;
-import rowley.androidarchitectureexample.nycdemographic.model.ZipCodeDemographicDataModel;
 
 /**
  * Tests for the ZipCodeDemographicDataSqliteDao
@@ -67,7 +64,7 @@ public class ZipCodeDemographicDataSqliteDaoTest extends SimpleActivityTestBase 
         //set up
         int[] zipCodes = new int[] {1234, 1734, 1434, 1534, 1334, 1634} ;
         for(int zipCode : zipCodes) {
-            saveDataToDb(zipCode, SQLiteDaoTestUtil.SAMPLE_DEMOGRAPHIC_DATA_JSON);
+            saveDataToDb(zipCode, ZipCodeDataDaoTestUtil.SAMPLE_DEMOGRAPHIC_DATA_JSON);
         }
 
         List<ZipCodeDataModel> foundModels = dao.getDataForAllZipCodes();
@@ -90,7 +87,7 @@ public class ZipCodeDemographicDataSqliteDaoTest extends SimpleActivityTestBase 
         List<ZipCodeDataModel> modelList = new ArrayList<>();
         for(int i = 0; i < 10; i++) {
             ZipCodeDataModel model =
-                    dao.getGson().fromJson(SQLiteDaoTestUtil.SAMPLE_DEMOGRAPHIC_DATA_JSON, ZipCodeDataModel.class);
+                    dao.getGson().fromJson(ZipCodeDataDaoTestUtil.SAMPLE_DEMOGRAPHIC_DATA_JSON, ZipCodeDataModel.class);
             model.setJurisdictionName(String.valueOf(i + 10000));
             modelList.add(model);
         }
@@ -102,14 +99,14 @@ public class ZipCodeDemographicDataSqliteDaoTest extends SimpleActivityTestBase 
         assertEquals(10, cursor.getInt(0));
 
         String foundJson = getJsonForZipCode(10001);
-        assertEquals(SQLiteDaoTestUtil.SAMPLE_DEMOGRAPHIC_DATA_JSON, foundJson);
+        assertEquals(ZipCodeDataDaoTestUtil.SAMPLE_DEMOGRAPHIC_DATA_JSON, foundJson);
     }
 
     public void testGetDataForZipCode() {
         //set up
         int[] zipCodes = new int[] {1234, 1734, 1434, 1534, 1334, 1634} ;
         for(int zipCode : zipCodes) {
-            saveDataToDb(zipCode, SQLiteDaoTestUtil.SAMPLE_DEMOGRAPHIC_DATA_JSON);
+            saveDataToDb(zipCode, ZipCodeDataDaoTestUtil.SAMPLE_DEMOGRAPHIC_DATA_JSON);
         }
 
         ZipCodeDataModel foundModel = dao.getDataForZipCode(String.valueOf(zipCodes[3]));
@@ -124,11 +121,11 @@ public class ZipCodeDemographicDataSqliteDaoTest extends SimpleActivityTestBase 
     }
 
     public void testSaveDataForZipCode() {
-        ZipCodeDataModel model = dao.getGson().fromJson(SQLiteDaoTestUtil.SAMPLE_DEMOGRAPHIC_DATA_JSON, ZipCodeDataModel.class);
+        ZipCodeDataModel model = dao.getGson().fromJson(ZipCodeDataDaoTestUtil.SAMPLE_DEMOGRAPHIC_DATA_JSON, ZipCodeDataModel.class);
         dao.saveDataForZipCode(model);
 
         String foundJson = getJsonForZipCode(10001);
-        assertEquals(SQLiteDaoTestUtil.SAMPLE_DEMOGRAPHIC_DATA_JSON, foundJson);
+        assertEquals(ZipCodeDataDaoTestUtil.SAMPLE_DEMOGRAPHIC_DATA_JSON, foundJson);
     }
 
     private void saveDataToDb(int zipCode, String json) {

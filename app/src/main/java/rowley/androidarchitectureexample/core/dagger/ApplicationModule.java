@@ -58,7 +58,8 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    public ZipCodeDemographicDataNetworkDao provideZipCodeDemographicDataNetworkDao(NetworkRequestHelper networkRequestHelper) {
-        return new ZipCodeDemographicDataNetworkDao(networkRequestHelper, application.getString(R.string.app_token));
+    public ZipCodeDemographicDataNetworkDao provideZipCodeDemographicDataNetworkDao(Context context,
+                                                                                    NetworkRequestHelper networkRequestHelper) {
+        return new ZipCodeDemographicDataNetworkDao(context, networkRequestHelper, application.getString(R.string.app_token));
     }
 }

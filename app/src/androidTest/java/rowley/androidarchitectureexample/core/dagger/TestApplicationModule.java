@@ -58,7 +58,8 @@ public class TestApplicationModule {
 
     @Provides
     @Singleton
-    public ZipCodeDemographicDataNetworkDao provideZipCodeDemographicDataNetworkDao(NetworkRequestHelper networkRequestHelper) {
-        return standardModule.provideZipCodeDemographicDataNetworkDao(networkRequestHelper);
+    public ZipCodeDemographicDataNetworkDao provideZipCodeDemographicDataNetworkDao(Context context,
+                                                                                    NetworkRequestHelper networkRequestHelper) {
+        return standardModule.provideZipCodeDemographicDataNetworkDao(context, networkRequestHelper);
     }
 }

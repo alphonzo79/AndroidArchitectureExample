@@ -3,7 +3,7 @@ package rowley.androidarchitectureexample.nycdemographic.dao;
 /**
  * Helper stuff for the SQLiteDao tests
  */
-public class SQLiteDaoTestUtil {
+public class ZipCodeDataDaoTestUtil {
     public static final String SAMPLE_DEMOGRAPHIC_DATA_JSON = "{\"count_american_indian\":\"0\",\"count_asian_non_hispanic\":" +
             "\"3\",\"count_black_non_hispanic\":\"21\",\"count_citizen_status_total\":\"44\",\"count_citizen_status_unknown\"" +
             ":\"0\",\"count_ethnicity_total\":\"44\",\"count_ethnicity_unknown\":\"0\",\"count_female\":\"22\"," +
@@ -22,4 +22,10 @@ public class SQLiteDaoTestUtil {
             "\"0.05\",\"percent_public_assistance_total\":\"100\",\"percent_public_assistance_unknown\":\"0\"," +
             "\"percent_receives_public_assistance\":\"0.45\",\"percent_us_citizen\":\"0.95\",\"percent_white_non_hispanic\":" +
             "\"0.02\"}";
+
+    public static final String SAMPLE_DEMOGRAPHIC_DATA_ARRAY = "[" + SAMPLE_DEMOGRAPHIC_DATA_JSON + "," +
+            SAMPLE_DEMOGRAPHIC_DATA_JSON + "," + SAMPLE_DEMOGRAPHIC_DATA_JSON + "," + SAMPLE_DEMOGRAPHIC_DATA_JSON + "," +
+            SAMPLE_DEMOGRAPHIC_DATA_JSON + "," + SAMPLE_DEMOGRAPHIC_DATA_JSON + "," + SAMPLE_DEMOGRAPHIC_DATA_JSON + "," +
+            SAMPLE_DEMOGRAPHIC_DATA_JSON + "," + SAMPLE_DEMOGRAPHIC_DATA_JSON + "," + SAMPLE_DEMOGRAPHIC_DATA_JSON + "," +
+            SAMPLE_DEMOGRAPHIC_DATA_JSON + "," + SAMPLE_DEMOGRAPHIC_DATA_JSON + "," + SAMPLE_DEMOGRAPHIC_DATA_JSON + "]";
 }

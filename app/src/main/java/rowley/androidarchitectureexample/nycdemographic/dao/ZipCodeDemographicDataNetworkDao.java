@@ -1,5 +1,9 @@
 package rowley.androidarchitectureexample.nycdemographic.dao;
 
+import android.content.Context;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
@@ -12,6 +16,7 @@ import java.util.List;
 import rowley.androidarchitectureexample.core.io.network.NetworkRequestHelper;
 import rowley.androidarchitectureexample.core.io.request.DataRequest;
 import rowley.androidarchitectureexample.core.io.request.RequestService;
+import rowley.androidarchitectureexample.nycdemographic.model.ZipCodeDataDeserializer;
 import rowley.androidarchitectureexample.nycdemographic.model.ZipCodeDataModel;
 
 /**
@@ -25,14 +30,17 @@ public class ZipCodeDemographicDataNetworkDao implements ZipCodeDemographicDataD
 
     private NetworkRequestHelper networkRequestHelper;
 
-    public ZipCodeDemographicDataNetworkDao(NetworkRequestHelper networkRequestHelper, String appToken) {
+    private Gson gson;
+
+    public ZipCodeDemographicDataNetworkDao(Context context, NetworkRequestHelper networkRequestHelper, String appToken) {
         this.networkRequestHelper = networkRequestHelper;
         this.AUTH_HEADER_VALUE = appToken;
+        gson = new GsonBuilder().registerTypeAdapter(ZipCodeDataModel.class, new ZipCodeDataDeserializer(context)).create();
     }
 
     @Override
     public List<String> getZipCodes() {
-        List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<>();
 
         DataRequest request = new DataRequest(RequestService.NYC_DEMOGRAPHIC_DATA, null);
         request.addHeader(AUTH_HEADER_NAME, AUTH_HEADER_VALUE);
@@ -54,13 +62,41 @@ public class ZipCodeDemographicDataNetworkDao implements ZipCodeDemographicDataD
 
     @Override
     public List<ZipCodeDataModel> getDataForAllZipCodes() {
-        // TODO: 3/6/16
-        return null;
+        List<ZipCodeDataModel> result = new ArrayList<>();
+
+        DataRequest request = new DataRequest(RequestService.NYC_DEMOGRAPHIC_DATA, null);
+        request.addHeader(AUTH_HEADER_NAME, AUTH_HEADER_VALUE);
+
+        JsonArray jsonArray = networkRequestHelper.sendRequestAndWait(request);
+        if(jsonArray != null) {
+            for(JsonElement element : jsonArray) {
+                ZipCodeDataModel model = gson.fromJson(element, ZipCodeDataModel.class);
+                if(model != null) {
+                    result.add(model);
+                }
+            }
+        }
+
+        return result;
     }
 
     @Override
     public ZipCodeDataModel getDataForZipCode(String zipCode) {
-        // TODO: 3/6/16
-        return null;
+        ZipCodeDataModel result = null;
+
+        DataRequest request = new DataRequest(RequestService.NYC_DEMOGRAPHIC_DATA, null);
+        request.addHeader(AUTH_HEADER_NAME, AUTH_HEADER_VALUE);
+        request.addParam(ZIP_CODE_FIELD_NAME, zipCode);
+
+        JsonArray jsonArray = networkRequestHelper.sendRequestAndWait(request);
+        if(jsonArray != null && jsonArray.size() > 0) {
+            result = gson.fromJson(jsonArray.get(0), ZipCodeDataModel.class);
+        }
+
+        return result;
+    }
+
+    public Gson getGson() {
+        return gson;
     }
 }
