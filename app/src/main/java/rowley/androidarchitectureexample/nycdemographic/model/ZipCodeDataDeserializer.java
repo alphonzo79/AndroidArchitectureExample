@@ -10,6 +10,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -36,6 +37,11 @@ public class ZipCodeDataDeserializer implements JsonDeserializer<ZipCodeDataMode
                     new InputStreamReader(context.getResources().openRawResource(R.raw.known_demographic_points));
             Type guideType = new TypeToken<Map<String, ZipCodeDemographicDataDeserializationGuideModel>>(){}.getType();
             guide = new Gson().fromJson(reader, guideType);
+            try {
+                reader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -47,8 +53,8 @@ public class ZipCodeDataDeserializer implements JsonDeserializer<ZipCodeDataMode
         JsonObject obj = json.getAsJsonObject();
         if(obj.has(ZIP_CODE_NAME)) {
             result.setJurisdictionName(obj.get(ZIP_CODE_NAME).getAsString());
-            result.setOriginalJson(json.toString());
         }
+        result.setOriginalJson(json.toString());
 
         Set<Map.Entry<String, JsonElement>> entrySet = obj.entrySet();
         //Build in an array first so we can easily work with the sort order from the guide

@@ -223,5 +223,10 @@
     "sortOrder":44,
     "displayName":"Public Assistance Unknown - Percentage",
     "isPercentage":true
+  },
+  "jurisdiction_name": {
+    "sortOrder": 45,
+    "displayName":"Zip Code",
+    "isPercentage":false
   }
 }
