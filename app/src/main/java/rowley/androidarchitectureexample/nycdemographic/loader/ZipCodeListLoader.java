@@ -1,6 +1,5 @@
 package rowley.androidarchitectureexample.nycdemographic.loader;
 
-import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.format.DateUtils;

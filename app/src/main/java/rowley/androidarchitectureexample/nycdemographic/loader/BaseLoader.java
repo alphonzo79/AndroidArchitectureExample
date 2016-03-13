@@ -1,9 +1,7 @@
 package rowley.androidarchitectureexample.nycdemographic.loader;
 
-import android.content.AsyncTaskLoader;
 import android.content.Context;
-
-import java.util.List;
+import android.support.v4.content.AsyncTaskLoader;
 
 /**
  * Base loader to handle some common management tasks
