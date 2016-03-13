@@ -44,7 +44,10 @@ public class ZipCodeListLoader extends BaseLoader<List<String>> {
         if(millisSinceDataCache < ZIP_CODE_CACHE_THRESHOLD) {
             result = sqliteDao.getZipCodes();
         } else {
-            networkDao.getZipCodes();
+            result = networkDao.getZipCodes();
+            ((ZipCodeDemographicDataSqliteDao)sqliteDao).saveZipCodes(result, true);
+            SharedPreferences prefs = getContext().getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
+            prefs.edit().putLong(ZIP_CODE_CACHE_DATE, System.currentTimeMillis()).apply();
         }
 
         return result;

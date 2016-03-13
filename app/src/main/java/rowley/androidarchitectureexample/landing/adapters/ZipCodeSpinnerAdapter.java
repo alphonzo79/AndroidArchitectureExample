@@ -26,7 +26,7 @@ public class ZipCodeSpinnerAdapter extends BaseAdapter {
 
     @Override
     public String getItem(int position) {
-        return data != null && data.size() < position ? data.get(position) : "";
+        return data != null && data.size() > position ? data.get(position) : "";
     }
 
     @Override

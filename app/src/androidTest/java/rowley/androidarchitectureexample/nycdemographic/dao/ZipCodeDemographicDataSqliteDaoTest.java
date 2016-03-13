@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteStatement;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -57,6 +58,74 @@ public class ZipCodeDemographicDataSqliteDaoTest extends SimpleActivityTestBase 
         assertEquals(zipCodes.length, foundZips.size());
         for(int i = 0; i < foundZips.size() - 1; i++) {
             assertTrue(Integer.valueOf(foundZips.get(i)) < Integer.valueOf(foundZips.get(i + 1)));
+        }
+    }
+
+    public void testSaveZipCodesSaveOnly() {
+        String[] zipCodes = new String[] {"1234", "1334", "1434", "1534", "1634"};
+        boolean success = dao.saveZipCodes(Arrays.asList(zipCodes), false);
+        assertTrue(success);
+
+        List<String> foundZips = getAllZipCodes();
+        assertNotNull(foundZips);
+        assertEquals(zipCodes.length, foundZips.size());
+        for(String zipCode : zipCodes) {
+            assertTrue(foundZips.contains(zipCode));
+        }
+    }
+
+    public void testSaveZipCodesSaveNewNoCleanUp() {
+        String[] zipCodes = new String[] {"1234", "1334", "1434", "1534", "1634"};
+        boolean success = dao.saveZipCodes(Arrays.asList(zipCodes), false);
+        assertTrue(success);
+
+        String[] newZips = new String[] {"2345", "2445", "2545"};
+        success = dao.saveZipCodes(Arrays.asList(newZips), false);
+        assertTrue(success);
+
+        List<String> foundZips = getAllZipCodes();
+        assertNotNull(foundZips);
+        assertEquals(zipCodes.length + newZips.length, foundZips.size());
+        for(String zipCode : zipCodes) {
+            assertTrue(foundZips.contains(zipCode));
+        }
+        for(String zipCode : newZips) {
+            assertTrue(foundZips.contains(zipCode));
+        }
+    }
+
+    public void testSaveZipCodesAndCleanUp() {
+        String[] zipCodes = new String[] {"1234", "1334", "1434", "1534", "1634"};
+        boolean success = dao.saveZipCodes(Arrays.asList(zipCodes), false);
+        assertTrue(success);
+
+        String[] newZips = new String[] {"2345", "2445", "2545", "1334", "1434"};
+        success = dao.saveZipCodes(Arrays.asList(newZips), true);
+        assertTrue(success);
+
+        List<String> foundZips = getAllZipCodes();
+        assertNotNull(foundZips);
+        assertEquals(newZips.length, foundZips.size());
+
+        for(String zipCode : newZips) {
+            assertTrue(foundZips.contains(zipCode));
+        }
+        assertFalse(foundZips.contains("1234"));
+        assertFalse(foundZips.contains("1534"));
+        assertFalse(foundZips.contains("1634"));
+    }
+
+    public void testSaveZipsRequestCleanUpNoCleanUp() {
+        //Basically, just make sure that a request to cleanup doesn't blow up when there is no cleanup to be done
+        String[] zipCodes = new String[] {"1234", "1334", "1434", "1534", "1634"};
+        boolean success = dao.saveZipCodes(Arrays.asList(zipCodes), true);
+        assertTrue(success);
+
+        List<String> foundZips = getAllZipCodes();
+        assertNotNull(foundZips);
+        assertEquals(zipCodes.length, foundZips.size());
+        for(String zipCode : zipCodes) {
+            assertTrue(foundZips.contains(zipCode));
         }
     }
 
@@ -164,6 +233,30 @@ public class ZipCodeDemographicDataSqliteDaoTest extends SimpleActivityTestBase 
             try {
                 while(cursor.moveToNext()) {
                     result = cursor.getString(0);
+                }
+            } catch (SQLiteException e) {
+                e.printStackTrace();
+            } finally {
+                cursor.close();
+            }
+        }
+
+        db.close();
+
+        return result;
+    }
+
+    private List<String> getAllZipCodes() {
+        List<String> result = new ArrayList<>();
+
+        SQLiteDatabase db = dao.getReadableDatabase();
+
+        Cursor cursor = db.query(dao.getNycDemogragicDataTableName(), new String[] {dao.getNycDemographicDataZipCodeColumnName()},
+                null, null, null, null, null);
+        if(cursor != null) {
+            try {
+                while(cursor.moveToNext()) {
+                    result.add(cursor.getString(0));
                 }
             } catch (SQLiteException e) {
                 e.printStackTrace();

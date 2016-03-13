@@ -2,6 +2,7 @@ package rowley.androidarchitectureexample.nycdemographic.dao;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteStatement;
@@ -12,6 +13,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import rowley.androidarchitectureexample.core.io.local.BaseDBHelper;
@@ -34,9 +36,14 @@ public class ZipCodeDemographicDataSqliteDao extends BaseDBHelper implements Zip
 
     @Override
     public List<String> getZipCodes() {
-        List<String> result = new ArrayList<>();
-
         SQLiteDatabase db = getReadableDatabase();
+        List<String> result = getZipCodes(db);
+        db.close();
+        return result;
+    }
+
+    private List<String> getZipCodes(SQLiteDatabase db) {
+        List<String> result = new ArrayList<>();
 
         Cursor cursor = db.query(NYC_DEMOGRAPHIC_DATA_TABLE,
                 new String[]{NYC_DEMO_DATA_ZIP_CODE_COLUMN}, null, null, null, null, NYC_DEMO_DATA_ZIP_CODE_COLUMN + " ASC");
@@ -55,6 +62,46 @@ public class ZipCodeDemographicDataSqliteDao extends BaseDBHelper implements Zip
         db.close();
 
         return result;
+    }
+
+    public boolean saveZipCodes(List<String> zipCodes, boolean cleanUpUnknowns) {
+        boolean success = true;
+
+        SQLiteDatabase db = getWritableDatabase();
+        List<String> foundZips = getZipCodes(db);
+        Iterator<String> iterator = foundZips.iterator();
+        while(iterator.hasNext()) {
+            String zipCode = iterator.next();
+            if(zipCodes.remove(zipCode)) {
+                iterator.remove();
+            }
+        }
+
+        if(!zipCodes.isEmpty()) {
+            try {
+                SQLiteStatement stmt = db.compileStatement("INSERT INTO " + NYC_DEMOGRAPHIC_DATA_TABLE +
+                        " (" + NYC_DEMO_DATA_ZIP_CODE_COLUMN + ") VALUES (?);");
+                for (String zipCode : zipCodes) {
+                    stmt.bindLong(1, Integer.valueOf(zipCode));
+                    stmt.execute();
+                    stmt.clearBindings();
+                }
+                stmt.close();
+            } catch (SQLException e) {
+                Log.e(TAG, e.getMessage(), e);
+                success = false;
+            }
+        }
+
+        if(cleanUpUnknowns && !foundZips.isEmpty()) {
+            for(String zipCode : foundZips) {
+                db.delete(NYC_DEMOGRAPHIC_DATA_TABLE, NYC_DEMO_DATA_ZIP_CODE_COLUMN + "=?", new String[]{zipCode});
+            }
+        }
+
+        db.close();
+
+        return success;
     }
 
     @Override
