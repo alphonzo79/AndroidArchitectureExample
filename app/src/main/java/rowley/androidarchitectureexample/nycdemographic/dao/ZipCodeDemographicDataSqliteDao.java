@@ -24,7 +24,7 @@ import rowley.androidarchitectureexample.nycdemographic.model.ZipCodeDataModel;
 /**
  * DAO for access zip code data from the Sqlite DB
  */
-public class ZipCodeDemographicDataSqliteDao extends BaseDBHelper implements ZipCodeDemographicDataDao {
+public class ZipCodeDemographicDataSqliteDao extends BaseDBHelper implements ZipCodeDemographicDataLocalDao {
     private static final String TAG = ZipCodeDemographicDataSqliteDao.class.getSimpleName();
 
     private Gson gson;
@@ -62,6 +62,7 @@ public class ZipCodeDemographicDataSqliteDao extends BaseDBHelper implements Zip
         return result;
     }
 
+    @Override
     public boolean saveZipCodes(List<String> zipCodes, boolean cleanUpUnknowns) {
         boolean success = true;
 
@@ -135,6 +136,7 @@ public class ZipCodeDemographicDataSqliteDao extends BaseDBHelper implements Zip
         return result;
     }
 
+    @Override
     public boolean saveDataForZipCodes(List<ZipCodeDataModel> data) {
         boolean success = false;
 
@@ -198,6 +200,7 @@ public class ZipCodeDemographicDataSqliteDao extends BaseDBHelper implements Zip
         return result;
     }
 
+    @Override
     public boolean saveDataForZipCode(ZipCodeDataModel data) {
         boolean success = false;
 

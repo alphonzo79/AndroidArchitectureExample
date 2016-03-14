@@ -24,8 +24,8 @@ import rowley.androidarchitectureexample.landing.interactor.ZipCodeListInteracto
 import rowley.androidarchitectureexample.landing.presenter.ZipCodeListPresenter;
 import rowley.androidarchitectureexample.landing.presenter.ZipCodeListView;
 import rowley.androidarchitectureexample.landing.viewcontrollers.fragments.LandingFragment;
-import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataNetworkDao;
-import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataSqliteDao;
+import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataDao;
+import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataLocalDao;
 import rx.android.schedulers.AndroidSchedulers;
 
 /**
@@ -45,9 +45,9 @@ public class LandingActivity extends AppCompatActivity implements ZipCodeListVie
     ProgressBar progressBar;
 
     @Inject
-    ZipCodeDemographicDataSqliteDao sqliteDao;
+    ZipCodeDemographicDataLocalDao sqliteDao;
     @Inject
-    ZipCodeDemographicDataNetworkDao networkDao;
+    ZipCodeDemographicDataDao networkDao;
     @Inject
     SharedPreferences userDefaultSharedPrefs;
 

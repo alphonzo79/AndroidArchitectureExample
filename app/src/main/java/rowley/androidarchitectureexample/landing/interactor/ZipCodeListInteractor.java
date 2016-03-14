@@ -1,6 +1,5 @@
 package rowley.androidarchitectureexample.landing.interactor;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -8,8 +7,7 @@ import android.util.Log;
 import java.util.List;
 
 import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataDao;
-import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataNetworkDao;
-import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataSqliteDao;
+import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataLocalDao;
 import rx.Observable;
 import rx.Scheduler;
 import rx.Subscriber;
@@ -25,7 +23,7 @@ public class ZipCodeListInteractor {
     private final String ZIP_CODE_CACHE_DATE = "zipCodeCachedDate";
     private final long ZIP_CODE_CACHE_THRESHOLD = DateUtils.DAY_IN_MILLIS * 5;
 
-    private ZipCodeDemographicDataSqliteDao sqliteDao;
+    private ZipCodeDemographicDataLocalDao localDao;
     private ZipCodeDemographicDataDao networkDao;
     private SharedPreferences userDefaultSharedPrefs;
     private ZipCodeListResponseListener responseListener;
@@ -35,14 +33,14 @@ public class ZipCodeListInteractor {
 
     /**
      * Build an interactor for retrieving a list of zip codes that we can get data about
-     * @param sqliteDao - Local gateway
+     * @param localDao - Local gateway
      * @param networkDao - Network gateway
      * @param userDefaultSharedPrefs - User default shared preferences, used for tracking last data cache date
      * @param observationScheduler - Which thread do you want to receive result on?
      */
-    public ZipCodeListInteractor(ZipCodeDemographicDataSqliteDao sqliteDao, ZipCodeDemographicDataNetworkDao networkDao,
+    public ZipCodeListInteractor(ZipCodeDemographicDataLocalDao localDao, ZipCodeDemographicDataDao networkDao,
                                  SharedPreferences userDefaultSharedPrefs, Scheduler observationScheduler) {
-        this.sqliteDao = sqliteDao;
+        this.localDao = localDao;
         this.networkDao = networkDao;
         this.userDefaultSharedPrefs = userDefaultSharedPrefs;
         this.observationScheduler = observationScheduler;
@@ -70,15 +68,15 @@ public class ZipCodeListInteractor {
                 long millisSinceDataCache = System.currentTimeMillis() - lastCache;
 
                 if(millisSinceDataCache < ZIP_CODE_CACHE_THRESHOLD) {
-                    result = sqliteDao.getZipCodes();
+                    result = localDao.getZipCodes();
                 } else {
                     result = networkDao.getZipCodes();
                     if(result != null) {
-                        sqliteDao.saveZipCodes(result, true);
+                        localDao.saveZipCodes(result, true);
                         userDefaultSharedPrefs.edit().putLong(ZIP_CODE_CACHE_DATE, System.currentTimeMillis()).apply();
                     } else {
                         //fall back to cached data
-                        result = sqliteDao.getZipCodes();
+                        result = localDao.getZipCodes();
                     }
                 }
 
