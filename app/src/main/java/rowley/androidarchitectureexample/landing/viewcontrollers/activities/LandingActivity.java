@@ -41,7 +41,6 @@ public class LandingActivity extends AppCompatActivity
     @Inject
     NetworkRequestHelper networkRequestHelper;
 
-    private boolean needToConsumeLoaderResult = false;
     private ZipCodeSpinnerAdapter spinnerAdapter;
 
     @Override
@@ -62,7 +61,6 @@ public class LandingActivity extends AppCompatActivity
     @Override
     public Loader<List<String>> onCreateLoader(int id, Bundle args) {
         if(id == ZIP_CODE_LIST_LOADER_ID) {
-            needToConsumeLoaderResult = true;
             return new ZipCodeListLoader(this, databaseConfig, networkRequestHelper, getString(R.string.app_token));
         }
 
@@ -71,18 +69,13 @@ public class LandingActivity extends AppCompatActivity
 
     @Override
     public void onLoadFinished(Loader<List<String>> loader, List<String> data) {
-        if(needToConsumeLoaderResult) {
-            needToConsumeLoaderResult = false;
-
-            if(spinnerAdapter == null) {
-                spinnerAdapter = new ZipCodeSpinnerAdapter(data);
-            } else {
-                spinnerAdapter.setData(data);
-            }
-
-            toolbarSpinner.setAdapter(spinnerAdapter);
-            // TODO: 3/13/16 Do we need to set the selected item?
+        if(spinnerAdapter == null) {
+            spinnerAdapter = new ZipCodeSpinnerAdapter(data);
+        } else {
+            spinnerAdapter.setData(data);
         }
+
+        toolbarSpinner.setAdapter(spinnerAdapter);
     }
 
     @Override

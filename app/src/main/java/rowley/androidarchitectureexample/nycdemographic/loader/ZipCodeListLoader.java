@@ -33,7 +33,7 @@ public class ZipCodeListLoader extends BaseLoader<List<String>> {
         networkDao = new ZipCodeDemographicDataNetworkDao(context, networkRequestHelper, appToken);
 
         SharedPreferences prefs = context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
-        long lastCache = prefs.getInt(ZIP_CODE_CACHE_DATE, 0);
+        long lastCache = prefs.getLong(ZIP_CODE_CACHE_DATE, 0);
         millisSinceDataCache = System.currentTimeMillis() - lastCache;
     }
 

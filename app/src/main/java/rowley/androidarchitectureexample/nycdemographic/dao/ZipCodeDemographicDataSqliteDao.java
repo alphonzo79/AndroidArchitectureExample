@@ -59,8 +59,6 @@ public class ZipCodeDemographicDataSqliteDao extends BaseDBHelper implements Zip
             }
         }
 
-        db.close();
-
         return result;
     }
 
@@ -72,7 +70,9 @@ public class ZipCodeDemographicDataSqliteDao extends BaseDBHelper implements Zip
         Iterator<String> iterator = foundZips.iterator();
         while(iterator.hasNext()) {
             String zipCode = iterator.next();
-            if(zipCodes.remove(zipCode)) {
+            int index = zipCodes.indexOf(zipCode);
+            if(index != -1) {
+                zipCodes.set(index, null);
                 iterator.remove();
             }
         }
@@ -82,9 +82,11 @@ public class ZipCodeDemographicDataSqliteDao extends BaseDBHelper implements Zip
                 SQLiteStatement stmt = db.compileStatement("INSERT INTO " + NYC_DEMOGRAPHIC_DATA_TABLE +
                         " (" + NYC_DEMO_DATA_ZIP_CODE_COLUMN + ") VALUES (?);");
                 for (String zipCode : zipCodes) {
-                    stmt.bindLong(1, Integer.valueOf(zipCode));
-                    stmt.execute();
-                    stmt.clearBindings();
+                    if(zipCode != null) {
+                        stmt.bindLong(1, Integer.valueOf(zipCode));
+                        stmt.execute();
+                        stmt.clearBindings();
+                    }
                 }
                 stmt.close();
             } catch (SQLException e) {

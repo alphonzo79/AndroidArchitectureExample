@@ -96,11 +96,11 @@ public class ZipCodeDemographicDataSqliteDaoTest extends SimpleActivityTestBase 
 
     public void testSaveZipCodesAndCleanUp() {
         String[] zipCodes = new String[] {"1234", "1334", "1434", "1534", "1634"};
-        boolean success = dao.saveZipCodes(Arrays.asList(zipCodes), false);
+        boolean success = dao.saveZipCodes(new ArrayList<String>(Arrays.asList(zipCodes)), false);
         assertTrue(success);
 
         String[] newZips = new String[] {"2345", "2445", "2545", "1334", "1434"};
-        success = dao.saveZipCodes(Arrays.asList(newZips), true);
+        success = dao.saveZipCodes(new ArrayList<String>(Arrays.asList(newZips)), true);
         assertTrue(success);
 
         List<String> foundZips = getAllZipCodes();

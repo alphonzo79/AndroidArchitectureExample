@@ -6,14 +6,14 @@ import rowley.androidarchitectureexample.core.dagger.ApplicationModule;
 import rowley.androidarchitectureexample.core.dagger.DaggerInjector;
 import rowley.androidarchitectureexample.core.dagger.DaggerTestApplicationComponent;
 import rowley.androidarchitectureexample.core.dagger.TestApplicationModule;
-import rowley.androidarchitectureexample.landing.viewcontrollers.activities.LandingActivity;
+import rowley.androidarchitectureexample.testable.viewcontroller.activity.SimpleTestActivity;
 
 /**
  * Base test class for instrumented Activity tests. This sets up dagger in a central place
  */
-public abstract class SimpleActivityTestBase extends ActivityInstrumentationTestCase2<LandingActivity> {
+public abstract class SimpleActivityTestBase extends ActivityInstrumentationTestCase2<SimpleTestActivity> {
     public SimpleActivityTestBase() {
-        super(LandingActivity.class);
+        super(SimpleTestActivity.class);
     }
 
     @Override
