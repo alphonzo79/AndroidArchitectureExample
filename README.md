@@ -32,6 +32,15 @@ For version numbers and build variant usage see app/build.gradle
 |:--------------------:|:-----------:|:-------:|
 | J-Unit               |             | Support for java unit testing |
 | Android Appcompat v7 | Google      | Backwards compatibility library |
+| Android Support Design | Google      | Backwards compatibility library |
+| ButterKnife | Jake Wharton      | View Injection library |
+| Dagger 2 | Google      | Dependency Injection library |
+| JavaX Annotation API |       | Annotations library to help with Butterknife and Dagger |
+| OkHttp | Square      | Networking library |
+| Gson | Google      | Json Serialization library |
+| Mokito | Mokito      | Mocking library for testing |
+| DexMaker | Crittercism      | Library to help make mocks work with instrumented tests |
+| Robolectric | Robolectric      | Stubbing/Runtime library to help with non-instrumented testing |
 
 API Used In the App
 ---
