@@ -45,9 +45,14 @@ public class ZipCodeListLoader extends BaseLoader<List<String>> {
             result = sqliteDao.getZipCodes();
         } else {
             result = networkDao.getZipCodes();
-            ((ZipCodeDemographicDataSqliteDao)sqliteDao).saveZipCodes(result, true);
-            SharedPreferences prefs = getContext().getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
-            prefs.edit().putLong(ZIP_CODE_CACHE_DATE, System.currentTimeMillis()).apply();
+            if(result != null) {
+                ((ZipCodeDemographicDataSqliteDao) sqliteDao).saveZipCodes(result, true);
+                SharedPreferences prefs = getContext().getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
+                prefs.edit().putLong(ZIP_CODE_CACHE_DATE, System.currentTimeMillis()).apply();
+            } else {
+                //fall back to cached data
+                result = sqliteDao.getZipCodes();
+            }
         }
 
         return result;

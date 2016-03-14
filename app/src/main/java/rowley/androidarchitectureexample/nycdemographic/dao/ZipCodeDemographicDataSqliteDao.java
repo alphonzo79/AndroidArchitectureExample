@@ -230,9 +230,15 @@ public class ZipCodeDemographicDataSqliteDao extends BaseDBHelper implements Zip
     private SQLiteStatement getSaveStatement(ZipCodeDataModel data, SQLiteDatabase db) {
         SQLiteStatement stmt;
 
-        ZipCodeDataModel foundModel = getDataForZipCode(data.getJurisdictionName(), db);
+        Cursor cursor = db.query(NYC_DEMOGRAPHIC_DATA_TABLE, new String[]{"count(*)"},
+                NYC_DEMO_DATA_ZIP_CODE_COLUMN + "=?", new String[] {data.getJurisdictionName()}, null, null, null);
+        boolean found = false;
+        if(cursor.moveToFirst()) {
+            int count = cursor.getInt(0);
+            found = count == 1;
+        }
 
-        if(foundModel != null) {
+        if(found) {
             stmt = db.compileStatement("UPDATE " + NYC_DEMOGRAPHIC_DATA_TABLE + " SET " +
                     NYC_DEMO_DATA_JSON_COLUMN + "=? WHERE " + NYC_DEMO_DATA_ZIP_CODE_COLUMN + "=?;");
             stmt.bindString(1, data.getOriginalJson());

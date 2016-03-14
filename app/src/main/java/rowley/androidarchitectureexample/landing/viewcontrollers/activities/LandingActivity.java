@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import java.util.List;
@@ -27,14 +28,18 @@ import rowley.androidarchitectureexample.nycdemographic.loader.ZipCodeListLoader
  * The main landing activity for the app. Really, this is the only activity, but we'll keep all the
  * structure as example of good practice for organization
  */
-public class LandingActivity extends AppCompatActivity
-        implements LoaderManager.LoaderCallbacks<List<String>>, AdapterView.OnItemSelectedListener {
+public class LandingActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<String>>,
+        AdapterView.OnItemSelectedListener, LandingFragment.LandingFragmentListener {
     private final int ZIP_CODE_LIST_LOADER_ID = 1;
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.toolbarSpinner)
     Spinner toolbarSpinner;
+    @Bind(R.id.click_blocker)
+    View clickBlockerView;
+    @Bind(R.id.progress_bar)
+    ProgressBar progressBar;
 
     @Inject
     IDatabaseConfig databaseConfig;
@@ -55,6 +60,8 @@ public class LandingActivity extends AppCompatActivity
         toolbarSpinner.setOnItemSelectedListener(this);
         getSupportActionBar().setTitle("");
 
+        clickBlockerView.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
         getSupportLoaderManager().initLoader(ZIP_CODE_LIST_LOADER_ID, null, this);
     }
 
@@ -92,5 +99,11 @@ public class LandingActivity extends AppCompatActivity
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         //do nothing
+    }
+
+    @Override
+    public void showProgressBar(boolean show) {
+        clickBlockerView.setVisibility(show ? View.VISIBLE : View.GONE);
+        progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 }

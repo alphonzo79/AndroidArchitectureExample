@@ -43,13 +43,12 @@ public class NetworkRequestHelper {
                 urlBuilder.append(requestParams.getGetMethod());
             }
             if(requestParams.getParams() != null && requestParams.getParams().size() > 0) {
-                urlBuilder.append("?");
                 StringBuilder paramBuilder = new StringBuilder();
                 for(String key : requestParams.getParams().keySet()) {
                     if(paramBuilder.length() > 0) {
                         paramBuilder.append("&");
                     }
-                    urlBuilder.append(key).append("=").append(requestParams.getParams().get(key));
+                    paramBuilder.append(key).append("=").append(requestParams.getParams().get(key));
                 }
                 urlBuilder.append("?").append(paramBuilder);
             }
