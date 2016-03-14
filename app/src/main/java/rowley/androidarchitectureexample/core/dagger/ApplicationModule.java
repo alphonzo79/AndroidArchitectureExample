@@ -1,6 +1,7 @@
 package rowley.androidarchitectureexample.core.dagger;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import javax.inject.Singleton;
 
@@ -61,5 +62,11 @@ public class ApplicationModule {
     public ZipCodeDemographicDataNetworkDao provideZipCodeDemographicDataNetworkDao(Context context,
                                                                                     NetworkRequestHelper networkRequestHelper) {
         return new ZipCodeDemographicDataNetworkDao(context, networkRequestHelper, application.getString(R.string.app_token));
+    }
+
+    @Provides
+    @Singleton
+    public SharedPreferences providesSharedPreferences(Context context) {
+        return context.getSharedPreferences("default", Context.MODE_PRIVATE);
     }
 }

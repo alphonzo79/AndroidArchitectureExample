@@ -1,14 +1,15 @@
 package rowley.androidarchitectureexample.landing.viewcontrollers.activities;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -18,19 +19,21 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import rowley.androidarchitectureexample.R;
 import rowley.androidarchitectureexample.core.dagger.DaggerInjector;
-import rowley.androidarchitectureexample.core.io.local.IDatabaseConfig;
-import rowley.androidarchitectureexample.core.io.network.NetworkRequestHelper;
 import rowley.androidarchitectureexample.landing.adapters.ZipCodeSpinnerAdapter;
+import rowley.androidarchitectureexample.landing.interactor.ZipCodeListInteractor;
+import rowley.androidarchitectureexample.landing.presenter.ZipCodeListPresenter;
+import rowley.androidarchitectureexample.landing.presenter.ZipCodeListView;
 import rowley.androidarchitectureexample.landing.viewcontrollers.fragments.LandingFragment;
-import rowley.androidarchitectureexample.nycdemographic.loader.ZipCodeListLoader;
+import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataNetworkDao;
+import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataSqliteDao;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * The main landing activity for the app. Really, this is the only activity, but we'll keep all the
  * structure as example of good practice for organization
  */
-public class LandingActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<String>>,
+public class LandingActivity extends AppCompatActivity implements ZipCodeListView,
         AdapterView.OnItemSelectedListener, LandingFragment.LandingFragmentListener {
-    private final int ZIP_CODE_LIST_LOADER_ID = 1;
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -42,11 +45,14 @@ public class LandingActivity extends AppCompatActivity implements LoaderManager.
     ProgressBar progressBar;
 
     @Inject
-    IDatabaseConfig databaseConfig;
+    ZipCodeDemographicDataSqliteDao sqliteDao;
     @Inject
-    NetworkRequestHelper networkRequestHelper;
+    ZipCodeDemographicDataNetworkDao networkDao;
+    @Inject
+    SharedPreferences userDefaultSharedPrefs;
 
     private ZipCodeSpinnerAdapter spinnerAdapter;
+    private ZipCodeListPresenter presenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,40 +66,46 @@ public class LandingActivity extends AppCompatActivity implements LoaderManager.
         toolbarSpinner.setOnItemSelectedListener(this);
         getSupportActionBar().setTitle("");
 
-        clickBlockerView.setVisibility(View.VISIBLE);
-        progressBar.setVisibility(View.VISIBLE);
-        getSupportLoaderManager().initLoader(ZIP_CODE_LIST_LOADER_ID, null, this);
+        presenter = new ZipCodeListPresenter(
+                new ZipCodeListInteractor(sqliteDao, networkDao, userDefaultSharedPrefs, AndroidSchedulers.mainThread()), this);
+        presenter.startPresenter();
     }
 
     @Override
-    public Loader<List<String>> onCreateLoader(int id, Bundle args) {
-        if(id == ZIP_CODE_LIST_LOADER_ID) {
-            return new ZipCodeListLoader(this, databaseConfig, networkRequestHelper, getString(R.string.app_token));
-        }
-
-        return null;
+    protected void onDestroy() {
+        presenter.stopPresenter();
+        super.onDestroy();
     }
 
     @Override
-    public void onLoadFinished(Loader<List<String>> loader, List<String> data) {
+    public void showZipCodeList(List<String> zipCodeList) {
         if(spinnerAdapter == null) {
-            spinnerAdapter = new ZipCodeSpinnerAdapter(data);
+            spinnerAdapter = new ZipCodeSpinnerAdapter(zipCodeList);
+            toolbarSpinner.setAdapter(spinnerAdapter);
         } else {
-            spinnerAdapter.setData(data);
+            spinnerAdapter.setData(zipCodeList);
         }
-
-        toolbarSpinner.setAdapter(spinnerAdapter);
     }
 
     @Override
-    public void onLoaderReset(Loader<List<String>> loader) {
+    public void showError(String error) {
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public Context getContext() {
+        return this;
+    }
+
+    @Override
+    public void notifyDemographicDataPresenterOfSelectedZipCode(String selectedZipCode) {
+        LandingFragment frag = (LandingFragment) getSupportFragmentManager().findFragmentById(R.id.landing_fragment);
+        frag.setZipCodeSelected(selectedZipCode);
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        LandingFragment frag = (LandingFragment) getSupportFragmentManager().findFragmentById(R.id.landing_fragment);
-        frag.setZipCodeSelected(spinnerAdapter.getItem(position));
+        presenter.onZipCodeSelected(spinnerAdapter.getItem(position));
     }
 
     @Override

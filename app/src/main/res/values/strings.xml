@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Android Architecture Example</string>
+
+    <string name="zip_code_list_error">An error occured while retrieving zip codes.</string>
 </resources>
