@@ -41,6 +41,8 @@ For version numbers and build variant usage see app/build.gradle
 | Mokito | Mokito      | Mocking library for testing |
 | DexMaker | Crittercism      | Library to help make mocks work with instrumented tests |
 | Robolectric | Robolectric      | Stubbing/Runtime library to help with non-instrumented testing |
+| RxJava | ReactiveX      | Reactive Extensions for Java thread work |
+| RxAndroid | ReactiveX      | Android Schedulers for Reactive Extensions |
 
 API Used In the App
 ---
