@@ -7,5 +7,4 @@ import java.util.List;
  */
 public interface ZipCodeListResponseListener {
     void onListRetreived(List<String> zipCodeList);
-    void onError();
 }

@@ -28,12 +28,6 @@ public class ZipCodeListPresenter implements ZipCodeListResponseListener {
         }
     }
 
-    @Override
-    public void onError() {
-        view.showProgressBar(false);
-        view.showError(view.getContext().getString(R.string.zip_code_list_error));
-    }
-
     public void startPresenter() {
         view.showProgressBar(true);
         interactor.startInteractor(this);

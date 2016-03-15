@@ -2,7 +2,6 @@ package rowley.androidarchitectureexample.landing.interactor;
 
 import android.content.SharedPreferences;
 import android.text.format.DateUtils;
-import android.util.Log;
 
 import java.util.List;
 
@@ -20,8 +19,8 @@ import rx.schedulers.Schedulers;
  */
 public class ZipCodeListInteractor {
     private final String TAG = ZipCodeListInteractor.class.getSimpleName();
-    private final String ZIP_CODE_CACHE_DATE = "zipCodeCachedDate";
-    private final long ZIP_CODE_CACHE_THRESHOLD = DateUtils.DAY_IN_MILLIS * 5;
+    public final static String ZIP_CODE_CACHE_DATE_PREF = "zipCodeCachedDate";
+    public final static long ZIP_CODE_CACHE_THRESHOLD = DateUtils.DAY_IN_MILLIS * 5;
 
     private ZipCodeDemographicDataLocalDao localDao;
     private ZipCodeDemographicDataDao networkDao;
@@ -64,7 +63,7 @@ public class ZipCodeListInteractor {
             public void call(Subscriber<? super List<String>> subscriber) {
                 List<String> result = null;
 
-                long lastCache = userDefaultSharedPrefs.getLong(ZIP_CODE_CACHE_DATE, 0);
+                long lastCache = userDefaultSharedPrefs.getLong(ZIP_CODE_CACHE_DATE_PREF, 0);
                 long millisSinceDataCache = System.currentTimeMillis() - lastCache;
 
                 if(millisSinceDataCache < ZIP_CODE_CACHE_THRESHOLD) {
@@ -73,7 +72,7 @@ public class ZipCodeListInteractor {
                     result = networkDao.getZipCodes();
                     if(result != null) {
                         localDao.saveZipCodes(result, true);
-                        userDefaultSharedPrefs.edit().putLong(ZIP_CODE_CACHE_DATE, System.currentTimeMillis()).apply();
+                        userDefaultSharedPrefs.edit().putLong(ZIP_CODE_CACHE_DATE_PREF, System.currentTimeMillis()).apply();
                     } else {
                         //fall back to cached data
                         result = localDao.getZipCodes();
@@ -87,12 +86,6 @@ public class ZipCodeListInteractor {
             @Override
             public void call(List<String> strings) {
                 responseListener.onListRetreived(strings);
-            }
-        }, new Action1<Throwable>() {
-            @Override
-            public void call(Throwable throwable) {
-                Log.e(TAG, throwable.getMessage(), throwable);
-                responseListener.onError();
             }
         });
     }
