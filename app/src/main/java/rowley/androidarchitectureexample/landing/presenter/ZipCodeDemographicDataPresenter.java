@@ -38,4 +38,8 @@ public class ZipCodeDemographicDataPresenter implements ZipCodeDemographicDataRe
     public void onDataPointSelected(ZipCodeDemographicDataModel data) {
         view.updateDataDisplay(data.getDisplayValue());
     }
+
+    public void stopPresenter() {
+        interactor.stopInteractor();
+    }
 }

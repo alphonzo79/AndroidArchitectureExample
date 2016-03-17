@@ -60,6 +60,12 @@ public class LandingFragment extends Fragment implements ZipCodeDemographicDataV
     }
 
     @Override
+    public void onDestroy() {
+        presenter.stopPresenter();
+        super.onDestroy();
+    }
+
+    @Override
     public void showProgressBar(boolean show) {
         ((LandingFragmentListener)getActivity()).showProgressBar(show);
     }
