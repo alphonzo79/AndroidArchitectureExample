@@ -7,6 +7,7 @@ import rowley.androidarchitectureexample.landing.viewcontrollers.activities.Acti
 import rowley.androidarchitectureexample.landing.viewcontrollers.activities.AllSpinnersActivity;
 import rowley.androidarchitectureexample.landing.viewcontrollers.activities.LandingActivity;
 import rowley.androidarchitectureexample.landing.viewcontrollers.activities.SpinnerAndListActivity;
+import rowley.androidarchitectureexample.landing.viewcontrollers.activities.SpinnerAndTextActivity;
 import rowley.androidarchitectureexample.landing.viewcontrollers.fragments.DataListFragment;
 import rowley.androidarchitectureexample.landing.viewcontrollers.fragments.DataSpinnerFragment;
 
@@ -22,4 +23,5 @@ public interface ApplicationComponent {
     void inject(DataListFragment dataListFragment);
     void inject(AllSpinnersActivity allSpinnersActivity);
     void inject(SpinnerAndListActivity spinnerAndListActivity);
+    void inject(SpinnerAndTextActivity spinnerAndTextActivity);
 }

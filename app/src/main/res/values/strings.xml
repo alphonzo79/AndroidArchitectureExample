@@ -8,5 +8,5 @@
     <string name="action_bar_spinner_fragment_list_button">ActionBar Spinner | Fragment List</string>
     <string name="activity_spinners_button">Spinners in Activity</string>
     <string name="activity_spinner_and_list_button">Spinner and List in Activity</string>
-    <string name="activity_spinner__button">Spinners and TextView in Activity</string>
+    <string name="activity_spinner__button">Spinner and TextView in Activity</string>
 </resources>

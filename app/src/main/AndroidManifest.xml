@@ -30,6 +30,9 @@
         <activity android:name=".landing.viewcontrollers.activities.SpinnerAndListActivity"
                   android:label="@string/app_name" />
 
+        <activity android:name=".landing.viewcontrollers.activities.SpinnerAndTextActivity"
+                  android:label="@string/app_name" />
+
         <activity android:name=".testable.viewcontroller.activity.SimpleTestActivity" />
 
     </application>

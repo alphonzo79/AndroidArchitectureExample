@@ -70,6 +70,6 @@ public class LandingActivity extends AppCompatActivity  {
 
     @OnClick(R.id.activity_spinner_text_view_button)
     public void launchSpinnerTextViewActivity() {
-        // TODO: 3/17/16
+        SpinnerAndTextActivity.startActivity(this);
     }
 }
