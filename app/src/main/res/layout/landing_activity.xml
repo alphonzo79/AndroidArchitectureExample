@@ -18,9 +18,7 @@
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-        </android.support.v7.widget.Toolbar>
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     </android.support.design.widget.AppBarLayout>
 
@@ -31,42 +29,52 @@
         android:layout_marginTop="35dp"
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
         android:text="@string/action_bar_spinner_fragment_spinner_button"/>
 
     <Button
         android:id="@+id/action_bar_spinner_fragment_list_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
         android:text="@string/action_bar_spinner_fragment_list_button"/>
 
     <Button
         android:id="@+id/activity_spinners_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
         android:text="@string/activity_spinners_button"/>
 
     <Button
         android:id="@+id/activity_spinner_list_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
         android:text="@string/activity_spinner_and_list_button"/>
 
     <Button
         android:id="@+id/activity_spinner_text_view_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
         android:text="@string/activity_spinner__button"/>
 
 </LinearLayout>

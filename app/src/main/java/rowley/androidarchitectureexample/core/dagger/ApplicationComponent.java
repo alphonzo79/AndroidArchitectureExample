@@ -4,6 +4,7 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import rowley.androidarchitectureexample.landing.viewcontrollers.activities.ActionBarSpinnerActivity;
+import rowley.androidarchitectureexample.landing.viewcontrollers.activities.AllSpinnersActivity;
 import rowley.androidarchitectureexample.landing.viewcontrollers.activities.LandingActivity;
 import rowley.androidarchitectureexample.landing.viewcontrollers.fragments.DataListFragment;
 import rowley.androidarchitectureexample.landing.viewcontrollers.fragments.DataSpinnerFragment;
@@ -18,4 +19,5 @@ public interface ApplicationComponent {
     void inject(DataSpinnerFragment dataSpinnerFragment);
     void inject(ActionBarSpinnerActivity actionBarSpinnerActivity);
     void inject(DataListFragment dataListFragment);
+    void inject(AllSpinnersActivity allSpinnersActivity);
 }
