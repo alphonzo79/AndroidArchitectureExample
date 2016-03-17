@@ -65,7 +65,7 @@ public class LandingActivity extends AppCompatActivity  {
 
     @OnClick(R.id.activity_spinner_list_button)
     public void launchSpinnerListActivity() {
-        // TODO: 3/17/16
+        SpinnerAndListActivity.startActivity(this);
     }
 
     @OnClick(R.id.activity_spinner_text_view_button)
