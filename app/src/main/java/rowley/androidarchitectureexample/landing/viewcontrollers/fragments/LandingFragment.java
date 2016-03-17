@@ -2,9 +2,6 @@ package rowley.androidarchitectureexample.landing.viewcontrollers.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,17 +16,13 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import rowley.androidarchitectureexample.R;
 import rowley.androidarchitectureexample.core.dagger.DaggerInjector;
-import rowley.androidarchitectureexample.core.io.local.IDatabaseConfig;
-import rowley.androidarchitectureexample.core.io.network.NetworkRequestHelper;
 import rowley.androidarchitectureexample.landing.adapters.ZipCodeDataSpinnerAdapter;
 import rowley.androidarchitectureexample.landing.interactor.ZipCodeDemographicDataInteractor;
 import rowley.androidarchitectureexample.landing.presenter.ZipCodeDemographicDataPresenter;
 import rowley.androidarchitectureexample.landing.presenter.ZipCodeDemographicDataView;
 import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataDao;
 import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataLocalDao;
-import rowley.androidarchitectureexample.nycdemographic.loader.ZipCodeDataLoader;
 import rowley.androidarchitectureexample.nycdemographic.model.ZipCodeDataModel;
-import rowley.androidarchitectureexample.nycdemographic.model.ZipCodeDemographicDataModel;
 import rx.android.schedulers.AndroidSchedulers;
 
 /**
