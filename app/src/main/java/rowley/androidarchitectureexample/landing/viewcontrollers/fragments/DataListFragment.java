@@ -3,6 +3,7 @@ package rowley.androidarchitectureexample.landing.viewcontrollers.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import rowley.androidarchitectureexample.R;
 import rowley.androidarchitectureexample.core.dagger.DaggerInjector;
+import rowley.androidarchitectureexample.landing.adapters.DemographicDataRecyclerAdapter;
+import rowley.androidarchitectureexample.landing.adapters.RecyclerViewVerticalSpaceDivider;
 import rowley.androidarchitectureexample.landing.interactor.ZipCodeDemographicDataInteractor;
 import rowley.androidarchitectureexample.landing.presenter.ZipCodeDemographicDataPresenter;
 import rowley.androidarchitectureexample.landing.presenter.ZipCodeDemographicDataView;
@@ -38,6 +41,8 @@ public class DataListFragment extends Fragment implements
     @Bind(R.id.recycler_view)
     RecyclerView recyclerView;
 
+    private DemographicDataRecyclerAdapter adapter;
+
     private ZipCodeDemographicDataPresenter presenter;
 
     public static DataListFragment newInstance() {
@@ -55,7 +60,13 @@ public class DataListFragment extends Fragment implements
         presenter = new ZipCodeDemographicDataPresenter(
                 this, new ZipCodeDemographicDataInteractor(localDao, networkDao, AndroidSchedulers.mainThread()));
 
-        // TODO: 3/17/16
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        RecyclerViewVerticalSpaceDivider decoration = new RecyclerViewVerticalSpaceDivider(getContext(),
+                getResources().getDimensionPixelOffset(R.dimen.recycler_decoration_side_padding));
+        recyclerView.addItemDecoration(decoration);
+
+        adapter = new DemographicDataRecyclerAdapter();
+        recyclerView.setAdapter(adapter);
 
         return view;
     }
@@ -83,7 +94,7 @@ public class DataListFragment extends Fragment implements
 
     @Override
     public void showZipCodeDemographicData(ZipCodeDataModel data) {
-        // TODO: 3/17/16
+        adapter.setData(data.getData());
     }
 
     @Override
