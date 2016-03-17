@@ -24,6 +24,10 @@ This style of application does have its own challenges and targets of criticism:
 
 But the result is that much of the infrastructure can now be either agnostic of Android or, at least, more agnostic of Android. You now have an architecture where certain pieces can now be easily wrapped into libraries and shared across Java applications, Android or not. You now have an architecture where you can easily swap out small parts of the pipeline to provide slightly different functionality while still maintaining the interface contract of inputs and outputs. And best of all, you now have an architecture where vast pieces of the application are unit testable with only small, distinct parts that must be left to instrumented, integration or manual testing.
 
+#### EXTENDED
+
+The `extended` branch holds yet another version of the app. This time we build off of the MVP branch to create several permutations of UI treatment. The point here is to show that we can now present the data and handle the front end in any number of ways with only very minor changes. Nothing in the Presenter or Interactor layers has to change. We just provide different view treatments, which are kept very light weight.
+
 Dependencies
 ---
 For version numbers and build variant usage see app/build.gradle
