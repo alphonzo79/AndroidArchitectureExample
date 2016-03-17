@@ -17,13 +17,14 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rowley.androidarchitectureexample.R;
 import rowley.androidarchitectureexample.core.dagger.DaggerInjector;
 import rowley.androidarchitectureexample.landing.adapters.ZipCodeSpinnerAdapter;
 import rowley.androidarchitectureexample.landing.interactor.ZipCodeListInteractor;
 import rowley.androidarchitectureexample.landing.presenter.ZipCodeListPresenter;
 import rowley.androidarchitectureexample.landing.presenter.ZipCodeListView;
-import rowley.androidarchitectureexample.landing.viewcontrollers.fragments.LandingFragment;
+import rowley.androidarchitectureexample.landing.viewcontrollers.fragments.DataSpinnerFragment;
 import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataDao;
 import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataLocalDao;
 import rx.android.schedulers.AndroidSchedulers;
@@ -32,90 +33,43 @@ import rx.android.schedulers.AndroidSchedulers;
  * The main landing activity for the app. Really, this is the only activity, but we'll keep all the
  * structure as example of good practice for organization
  */
-public class LandingActivity extends AppCompatActivity implements ZipCodeListView,
-        AdapterView.OnItemSelectedListener, LandingFragment.LandingFragmentListener {
+public class LandingActivity extends AppCompatActivity  {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.toolbarSpinner)
-    Spinner toolbarSpinner;
-    @Bind(R.id.click_blocker)
-    View clickBlockerView;
-    @Bind(R.id.progress_bar)
-    ProgressBar progressBar;
-
-    @Inject
-    ZipCodeDemographicDataLocalDao sqliteDao;
-    @Inject
-    ZipCodeDemographicDataDao networkDao;
-    @Inject
-    SharedPreferences userDefaultSharedPrefs;
-
-    private ZipCodeSpinnerAdapter spinnerAdapter;
-    private ZipCodeListPresenter presenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.landing_activity);
 
-        DaggerInjector.getInstance().getApplicationComponent().inject(this);
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
 
-        toolbarSpinner.setOnItemSelectedListener(this);
-        getSupportActionBar().setTitle("");
-
-        presenter = new ZipCodeListPresenter(
-                new ZipCodeListInteractor(sqliteDao, networkDao, userDefaultSharedPrefs, AndroidSchedulers.mainThread()), this);
-        presenter.startPresenter();
+        toolbar.setTitle(R.string.app_name);
     }
 
-    @Override
-    protected void onDestroy() {
-        presenter.stopPresenter();
-        super.onDestroy();
+    @OnClick(R.id.action_bar_spinner_activity_button)
+    public void launchActionBarSpinnerActivityWithSpinnerFragment() {
+        ActionBarSpinnerActivity.startActivity(this, false);
     }
 
-    @Override
-    public void showZipCodeList(List<String> zipCodeList) {
-        if(spinnerAdapter == null) {
-            spinnerAdapter = new ZipCodeSpinnerAdapter(zipCodeList);
-            toolbarSpinner.setAdapter(spinnerAdapter);
-        } else {
-            spinnerAdapter.setData(zipCodeList);
-        }
+    @OnClick(R.id.action_bar_spinner_fragment_list_button)
+    public void launchActionBarSpinnerActivityWithListFragment() {
+        ActionBarSpinnerActivity.startActivity(this, true);
     }
 
-    @Override
-    public void showError(String error) {
-        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+    @OnClick(R.id.activity_spinners_button)
+    public void launchSpinnersActivity() {
+        // TODO: 3/17/16
     }
 
-    @Override
-    public Context getContext() {
-        return this;
+    @OnClick(R.id.activity_spinner_list_button)
+    public void launchSpinnerListActivity() {
+        // TODO: 3/17/16
     }
 
-    @Override
-    public void notifyDemographicDataPresenterOfSelectedZipCode(String selectedZipCode) {
-        LandingFragment frag = (LandingFragment) getSupportFragmentManager().findFragmentById(R.id.landing_fragment);
-        frag.setZipCodeSelected(selectedZipCode);
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        presenter.onZipCodeSelected(spinnerAdapter.getItem(position));
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-        //do nothing
-    }
-
-    @Override
-    public void showProgressBar(boolean show) {
-        clickBlockerView.setVisibility(show ? View.VISIBLE : View.GONE);
-        progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+    @OnClick(R.id.activity_spinner_text_view_button)
+    public void launchSpinnerTextViewActivity() {
+        // TODO: 3/17/16
     }
 }

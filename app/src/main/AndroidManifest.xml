@@ -20,6 +20,8 @@
             </intent-filter>
 
         </activity>
+        
+        <activity android:name=".landing.viewcontrollers.activities.ActionBarSpinnerActivity" />
 
         <activity android:name=".testable.viewcontroller.activity.SimpleTestActivity" />
 

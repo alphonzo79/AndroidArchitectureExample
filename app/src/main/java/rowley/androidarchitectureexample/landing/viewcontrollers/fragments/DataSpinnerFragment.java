@@ -1,5 +1,6 @@
 package rowley.androidarchitectureexample.landing.viewcontrollers.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import rowley.androidarchitectureexample.landing.adapters.ZipCodeDataSpinnerAdap
 import rowley.androidarchitectureexample.landing.interactor.ZipCodeDemographicDataInteractor;
 import rowley.androidarchitectureexample.landing.presenter.ZipCodeDemographicDataPresenter;
 import rowley.androidarchitectureexample.landing.presenter.ZipCodeDemographicDataView;
+import rowley.androidarchitectureexample.landing.viewcontrollers.activities.ActionBarSpinnerActivity;
 import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataDao;
 import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataLocalDao;
 import rowley.androidarchitectureexample.nycdemographic.model.ZipCodeDataModel;
@@ -28,7 +30,8 @@ import rx.android.schedulers.AndroidSchedulers;
 /**
  * Fragment for the landing view
  */
-public class LandingFragment extends Fragment implements ZipCodeDemographicDataView, AdapterView.OnItemSelectedListener {
+public class DataSpinnerFragment extends Fragment implements ZipCodeDemographicDataView,
+        AdapterView.OnItemSelectedListener, ActionBarSpinnerActivity.ZipCodeSelectionReceiver {
 
     @Bind(R.id.data_value_text_view)
     TextView dataValueTextView;
@@ -43,10 +46,14 @@ public class LandingFragment extends Fragment implements ZipCodeDemographicDataV
     private ZipCodeDataSpinnerAdapter spinnerAdapter;
     private ZipCodeDemographicDataPresenter presenter;
 
+    public static DataSpinnerFragment newInstance() {
+        return new DataSpinnerFragment();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         super.onCreateView(inflater, parent, savedInstanceState);
-        View view = inflater.inflate(R.layout.landing_fragment, parent, false);
+        View view = inflater.inflate(R.layout.data_spinner_fragment, parent, false);
 
         DaggerInjector.getInstance().getApplicationComponent().inject(this);
         ButterKnife.bind(this, view);
@@ -60,6 +67,16 @@ public class LandingFragment extends Fragment implements ZipCodeDemographicDataV
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if(context instanceof DataFragmentListener) {
+            ((DataFragmentListener)context).registerZipCodeSelectionReceiver(this);
+        } else {
+            throw new IllegalStateException("The hosting context must implement the DataFragmentListener interface");
+        }
+    }
+
+    @Override
     public void onDestroy() {
         presenter.stopPresenter();
         super.onDestroy();
@@ -67,7 +84,7 @@ public class LandingFragment extends Fragment implements ZipCodeDemographicDataV
 
     @Override
     public void showProgressBar(boolean show) {
-        ((LandingFragmentListener)getActivity()).showProgressBar(show);
+        ((DataFragmentListener)getActivity()).showProgressBar(show);
     }
 
     @Override
@@ -100,11 +117,8 @@ public class LandingFragment extends Fragment implements ZipCodeDemographicDataV
         //do nothing
     }
 
-    public void setZipCodeSelected(String zipCode) {
+    @Override
+    public void onZipCodeSelected(String zipCode) {
         presenter.onZipCodeSelected(zipCode);
-    }
-
-    public interface LandingFragmentListener {
-        void showProgressBar(boolean show);
     }
 }
