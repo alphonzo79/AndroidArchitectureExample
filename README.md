@@ -62,4 +62,4 @@ This project was set up on Android Studio 2.0 and using Gradle 2.8, but should w
 
 Presentation Slides
 ---
-To Do ;)
+Presentation slides are found in the repo in Keynote format, or can be viewed online [here] (https://speakerdeck.com/alphonzo79/better-android-architecture).
