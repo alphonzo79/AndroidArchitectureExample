@@ -85,34 +85,20 @@ public class ZipCodeListPresenterTest {
 
     @Test
     public void testOnListRetrievedNullList() {
-        String errorMessage = "This is an error message";
-        Context mockContext = mock(Context.class);
-        when(mockView.getContext()).thenReturn(mockContext);
-        when(mockContext.getString(anyInt())).thenReturn(errorMessage);
-
         presenter.onListRetreived(null);
 
         verify(mockView).showProgressBar(false);
-        verify(mockView).getContext();
-        verify(mockContext).getString(anyInt());
-        verify(mockView).showError(errorMessage);
+        verify(mockView).showZipCodeListError();
         verifyNoMoreInteractions(mockView);
         verifyZeroInteractions(mockInteractor);
     }
 
     @Test
     public void testOnListRetrievedEmptyList() {
-        String errorMessage = "This is an error message";
-        Context mockContext = mock(Context.class);
-        when(mockView.getContext()).thenReturn(mockContext);
-        when(mockContext.getString(anyInt())).thenReturn(errorMessage);
-
         presenter.onListRetreived(new ArrayList<String>());
 
         verify(mockView).showProgressBar(false);
-        verify(mockView).getContext();
-        verify(mockContext).getString(anyInt());
-        verify(mockView).showError(errorMessage);
+        verify(mockView).showZipCodeListError();
         verifyNoMoreInteractions(mockView);
         verifyZeroInteractions(mockInteractor);
     }

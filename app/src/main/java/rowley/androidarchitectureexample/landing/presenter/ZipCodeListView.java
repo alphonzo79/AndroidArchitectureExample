@@ -10,7 +10,6 @@ import java.util.List;
 public interface ZipCodeListView {
     void showProgressBar(boolean show);
     void showZipCodeList(List<String> zipCodeList);
-    void showError(String error);
-    Context getContext();
+    void showZipCodeListError();
     void notifyDemographicDataPresenterOfSelectedZipCode(String selectedZipCode);
 }

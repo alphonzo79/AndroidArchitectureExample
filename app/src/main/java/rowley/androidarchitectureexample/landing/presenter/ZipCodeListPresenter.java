@@ -2,7 +2,6 @@ package rowley.androidarchitectureexample.landing.presenter;
 
 import java.util.List;
 
-import rowley.androidarchitectureexample.R;
 import rowley.androidarchitectureexample.landing.interactor.ZipCodeListInteractor;
 import rowley.androidarchitectureexample.landing.interactor.ZipCodeListResponseListener;
 
@@ -24,7 +23,7 @@ public class ZipCodeListPresenter implements ZipCodeListResponseListener {
         if(zipCodeList != null && !zipCodeList.isEmpty()) {
             view.showZipCodeList(zipCodeList);
         } else {
-            view.showError(view.getContext().getString(R.string.zip_code_list_error));
+            view.showZipCodeListError();
         }
     }
 
