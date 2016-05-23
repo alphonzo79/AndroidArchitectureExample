@@ -26,7 +26,7 @@ public class ZipCodeDemographicDataPresenter implements ZipCodeDemographicDataRe
             view.showZipCodeDemographicData(data);
             view.updateDataDisplay(data.getData().get(0).getDisplayValue());
         } else {
-            view.displayError();
+            view.displayZipCodeDataError();
         }
     }
 
