@@ -113,13 +113,8 @@ public class ActionBarSpinnerActivity extends AppCompatActivity implements ZipCo
     }
 
     @Override
-    public void showError(String error) {
-        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public Context getContext() {
-        return this;
+    public void showZipCodeListError() {
+        Toast.makeText(this, getString(R.string.zip_code_list_error), Toast.LENGTH_SHORT).show();
     }
 
     @Override

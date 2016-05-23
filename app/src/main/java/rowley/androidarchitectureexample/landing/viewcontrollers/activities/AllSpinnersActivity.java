@@ -134,7 +134,7 @@ public class AllSpinnersActivity extends AppCompatActivity implements ZipCodeLis
 
     @Override
     public void displayError() {
-        Toast.makeText(getContext(), R.string.zip_code_data_error, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.zip_code_data_error, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -153,13 +153,8 @@ public class AllSpinnersActivity extends AppCompatActivity implements ZipCodeLis
     }
 
     @Override
-    public void showError(String error) {
-        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public Context getContext() {
-        return this;
+    public void showZipCodeListError() {
+        Toast.makeText(this, getString(R.string.zip_code_list_error), Toast.LENGTH_SHORT).show();
     }
 
     @Override
