@@ -61,7 +61,7 @@ public class ZipCodeDemographicDataPresenterTest {
         presenter.onDataRetrieved(null);
 
         verify(mockView).showProgressBar(false);
-        verify(mockView).displayError();
+        verify(mockView).displayZipCodeDataError();
 
         verifyNoMoreInteractions(mockView);
         verifyZeroInteractions(mockInteractor);
@@ -74,7 +74,7 @@ public class ZipCodeDemographicDataPresenterTest {
         presenter.onDataRetrieved(mockZipCodeModel);
 
         verify(mockView).showProgressBar(false);
-        verify(mockView).displayError();
+        verify(mockView).displayZipCodeDataError();
 
         verifyNoMoreInteractions(mockView);
         verifyZeroInteractions(mockInteractor);
@@ -89,7 +89,7 @@ public class ZipCodeDemographicDataPresenterTest {
         presenter.onDataRetrieved(mockZipCodeModel);
 
         verify(mockView).showProgressBar(false);
-        verify(mockView).displayError();
+        verify(mockView).displayZipCodeDataError();
 
         verifyNoMoreInteractions(mockView);
         verifyZeroInteractions(mockInteractor);

@@ -112,7 +112,7 @@ public class SpinnerAndTextActivity extends AppCompatActivity
     }
 
     @Override
-    public void displayError() {
+    public void displayZipCodeDataError() {
         Toast.makeText(this, R.string.zip_code_data_error, Toast.LENGTH_LONG).show();
     }
 

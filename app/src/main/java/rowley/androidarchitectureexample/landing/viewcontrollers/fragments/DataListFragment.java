@@ -103,7 +103,7 @@ public class DataListFragment extends Fragment implements
     }
 
     @Override
-    public void displayError() {
+    public void displayZipCodeDataError() {
         Toast.makeText(getContext(), R.string.zip_code_data_error, Toast.LENGTH_LONG).show();
     }
 

@@ -11,5 +11,5 @@ public interface ZipCodeDemographicDataView {
     void showProgressBar(boolean show);
     void showZipCodeDemographicData(ZipCodeDataModel data);
     void updateDataDisplay(String text);
-    void displayError();
+    void displayZipCodeDataError();
 }
