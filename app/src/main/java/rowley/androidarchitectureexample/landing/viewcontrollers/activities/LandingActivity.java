@@ -1,33 +1,13 @@
 package rowley.androidarchitectureexample.landing.viewcontrollers.activities;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ProgressBar;
-import android.widget.Spinner;
-import android.widget.Toast;
-
-import java.util.List;
-
-import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rowley.androidarchitectureexample.R;
-import rowley.androidarchitectureexample.core.dagger.DaggerInjector;
-import rowley.androidarchitectureexample.landing.adapters.ZipCodeSpinnerAdapter;
-import rowley.androidarchitectureexample.landing.interactor.ZipCodeListInteractor;
-import rowley.androidarchitectureexample.landing.presenter.ZipCodeListPresenter;
-import rowley.androidarchitectureexample.landing.presenter.ZipCodeListView;
-import rowley.androidarchitectureexample.landing.viewcontrollers.fragments.DataSpinnerFragment;
-import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataDao;
-import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataLocalDao;
-import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * The main landing activity for the app. Really, this is the only activity, but we'll keep all the

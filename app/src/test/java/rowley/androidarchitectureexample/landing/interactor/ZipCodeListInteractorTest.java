@@ -11,8 +11,8 @@ import org.mockito.Mock;
 import java.util.ArrayList;
 import java.util.List;
 
-import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataDao;
-import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataLocalDao;
+import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataReadableDao;
+import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataWritableDao;
 import rx.schedulers.Schedulers;
 
 import static org.junit.Assert.assertEquals;
@@ -31,9 +31,9 @@ import static org.mockito.MockitoAnnotations.initMocks;
 public class ZipCodeListInteractorTest {
 
     @Mock
-    ZipCodeDemographicDataLocalDao mockLocalDao;
+    ZipCodeDemographicDataWritableDao mockLocalDao;
     @Mock
-    ZipCodeDemographicDataDao mockNetworkDao;
+    ZipCodeDemographicDataReadableDao mockNetworkDao;
     @Mock
     SharedPreferences mockSharedPreferences;
     @Mock

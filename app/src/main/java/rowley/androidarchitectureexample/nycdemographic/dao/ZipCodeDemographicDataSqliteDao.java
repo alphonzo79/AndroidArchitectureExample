@@ -24,7 +24,7 @@ import rowley.androidarchitectureexample.nycdemographic.model.ZipCodeDataModel;
 /**
  * DAO for access zip code data from the Sqlite DB
  */
-public class ZipCodeDemographicDataSqliteDao extends BaseDBHelper implements ZipCodeDemographicDataLocalDao {
+public class ZipCodeDemographicDataSqliteDao extends BaseDBHelper implements ZipCodeDemographicDataWritableDao {
     private static final String TAG = ZipCodeDemographicDataSqliteDao.class.getSimpleName();
 
     private Gson gson;

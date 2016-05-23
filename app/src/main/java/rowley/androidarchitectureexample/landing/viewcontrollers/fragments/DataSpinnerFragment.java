@@ -22,8 +22,8 @@ import rowley.androidarchitectureexample.landing.interactor.ZipCodeDemographicDa
 import rowley.androidarchitectureexample.landing.presenter.ZipCodeDemographicDataPresenter;
 import rowley.androidarchitectureexample.landing.presenter.ZipCodeDemographicDataView;
 import rowley.androidarchitectureexample.landing.viewcontrollers.activities.ActionBarSpinnerActivity;
-import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataDao;
-import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataLocalDao;
+import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataReadableDao;
+import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataWritableDao;
 import rowley.androidarchitectureexample.nycdemographic.model.ZipCodeDataModel;
 import rx.android.schedulers.AndroidSchedulers;
 
@@ -39,9 +39,9 @@ public class DataSpinnerFragment extends Fragment implements ZipCodeDemographicD
     Spinner dataTitleSpinner;
 
     @Inject
-    ZipCodeDemographicDataLocalDao localDao;
+    ZipCodeDemographicDataWritableDao localDao;
     @Inject
-    ZipCodeDemographicDataDao networkDao;
+    ZipCodeDemographicDataReadableDao networkDao;
 
     private ZipCodeDataSpinnerAdapter spinnerAdapter;
     private ZipCodeDemographicDataPresenter presenter;
