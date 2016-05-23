@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:gravity="center">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
 
     <Spinner
         android:id="@+id/data_title_spinner"
@@ -19,6 +20,6 @@
         android:layout_marginTop="35dp"
         android:textSize="18dp"
         android:textStyle="bold"
-        android:text="Landing Fragment" />
+        tools:text="Landing Fragment" />
 
 </LinearLayout>
