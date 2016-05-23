@@ -27,8 +27,8 @@ import rowley.androidarchitectureexample.landing.presenter.ZipCodeListView;
 import rowley.androidarchitectureexample.landing.viewcontrollers.fragments.DataFragmentListener;
 import rowley.androidarchitectureexample.landing.viewcontrollers.fragments.DataListFragment;
 import rowley.androidarchitectureexample.landing.viewcontrollers.fragments.DataSpinnerFragment;
-import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataDao;
-import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataLocalDao;
+import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataReadableDao;
+import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataWritableDao;
 import rx.android.schedulers.AndroidSchedulers;
 
 /**
@@ -50,9 +50,9 @@ public class ActionBarSpinnerActivity extends AppCompatActivity implements ZipCo
     ProgressBar progressBar;
 
     @Inject
-    ZipCodeDemographicDataLocalDao sqliteDao;
+    ZipCodeDemographicDataWritableDao localDao;
     @Inject
-    ZipCodeDemographicDataDao networkDao;
+    ZipCodeDemographicDataReadableDao networkDao;
     @Inject
     SharedPreferences userDefaultSharedPrefs;
 
@@ -84,7 +84,7 @@ public class ActionBarSpinnerActivity extends AppCompatActivity implements ZipCo
         getSupportActionBar().setTitle("");
 
         presenter = new ZipCodeListPresenter(
-                new ZipCodeListInteractor(sqliteDao, networkDao, userDefaultSharedPrefs, AndroidSchedulers.mainThread()), this);
+                new ZipCodeListInteractor(localDao, networkDao, userDefaultSharedPrefs, AndroidSchedulers.mainThread()), this);
         presenter.startPresenter();
 
         if(VIEW_TYPE_SPINNER.equals(getIntent().getStringExtra(INTENT_KEY_VIEW_TYPE))) {

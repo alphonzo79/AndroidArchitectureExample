@@ -28,8 +28,8 @@ import rowley.androidarchitectureexample.landing.presenter.ZipCodeDemographicDat
 import rowley.androidarchitectureexample.landing.presenter.ZipCodeDemographicDataView;
 import rowley.androidarchitectureexample.landing.presenter.ZipCodeListPresenter;
 import rowley.androidarchitectureexample.landing.presenter.ZipCodeListView;
-import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataDao;
-import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataLocalDao;
+import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataReadableDao;
+import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataWritableDao;
 import rowley.androidarchitectureexample.nycdemographic.model.ZipCodeDataModel;
 import rowley.androidarchitectureexample.nycdemographic.model.ZipCodeDemographicDataModel;
 import rx.android.schedulers.AndroidSchedulers;
@@ -50,9 +50,9 @@ public class SpinnerAndTextActivity extends AppCompatActivity
     ProgressBar progressBar;
 
     @Inject
-    ZipCodeDemographicDataLocalDao localDao;
+    ZipCodeDemographicDataWritableDao localDao;
     @Inject
-    ZipCodeDemographicDataDao networkDao;
+    ZipCodeDemographicDataReadableDao networkDao;
     @Inject
     SharedPreferences userDefaultSharedPrefs;
 
