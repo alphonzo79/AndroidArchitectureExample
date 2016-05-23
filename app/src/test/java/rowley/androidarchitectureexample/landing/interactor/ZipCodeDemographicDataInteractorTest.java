@@ -7,8 +7,8 @@ import org.mockito.Mock;
 import java.util.ArrayList;
 import java.util.List;
 
-import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataDao;
-import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataLocalDao;
+import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataReadableDao;
+import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataWritableDao;
 import rowley.androidarchitectureexample.nycdemographic.model.ZipCodeDataModel;
 import rowley.androidarchitectureexample.nycdemographic.model.ZipCodeDemographicDataModel;
 import rx.schedulers.Schedulers;
@@ -26,9 +26,9 @@ import static org.mockito.MockitoAnnotations.initMocks;
 public class ZipCodeDemographicDataInteractorTest {
 
     @Mock
-    ZipCodeDemographicDataLocalDao mockLocalDao;
+    ZipCodeDemographicDataWritableDao mockLocalDao;
     @Mock
-    ZipCodeDemographicDataDao mockNetworkDao;
+    ZipCodeDemographicDataReadableDao mockNetworkDao;
     @Mock
     ZipCodeDemographicDataResponseModel mockResponstListener;
 

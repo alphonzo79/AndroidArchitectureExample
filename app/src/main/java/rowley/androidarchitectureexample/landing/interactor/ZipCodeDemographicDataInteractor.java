@@ -1,7 +1,7 @@
 package rowley.androidarchitectureexample.landing.interactor;
 
-import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataDao;
-import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataLocalDao;
+import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataReadableDao;
+import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataWritableDao;
 import rowley.androidarchitectureexample.nycdemographic.model.ZipCodeDataModel;
 import rx.Observable;
 import rx.Scheduler;
@@ -15,15 +15,15 @@ import rx.schedulers.Schedulers;
  */
 public class ZipCodeDemographicDataInteractor {
 
-    private ZipCodeDemographicDataLocalDao localDao;
-    private ZipCodeDemographicDataDao networkDao;
+    private ZipCodeDemographicDataWritableDao localDao;
+    private ZipCodeDemographicDataReadableDao networkDao;
     private Scheduler observationScheduler;
     private Subscription zipCodeDataSubscription;
 
     private ZipCodeDemographicDataResponseModel responseListener;
 
     public ZipCodeDemographicDataInteractor(
-            ZipCodeDemographicDataLocalDao localDao, ZipCodeDemographicDataDao networkDao, Scheduler observationScheduler) {
+            ZipCodeDemographicDataWritableDao localDao, ZipCodeDemographicDataReadableDao networkDao, Scheduler observationScheduler) {
         this.localDao = localDao;
         this.networkDao = networkDao;
         this.observationScheduler = observationScheduler;

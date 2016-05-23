@@ -6,11 +6,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import rowley.androidarchitectureexample.core.io.network.NetworkRequestHelper;
@@ -22,7 +20,7 @@ import rowley.androidarchitectureexample.nycdemographic.model.ZipCodeDataModel;
 /**
  * DAO for accessing Zip Code data from the network
  */
-public class ZipCodeDemographicDataNetworkDao implements ZipCodeDemographicDataDao {
+public class ZipCodeDemographicDataNetworkDao implements ZipCodeDemographicDataReadableDao {
     private final String AUTH_HEADER_NAME = "X-App-Token";
     private final String AUTH_HEADER_VALUE;
 

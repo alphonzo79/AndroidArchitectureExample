@@ -7,7 +7,7 @@ import rowley.androidarchitectureexample.nycdemographic.model.ZipCodeDataModel;
 /**
  * Interface defining how we get Zip Code Demographic Data
  */
-public interface ZipCodeDemographicDataDao {
+public interface ZipCodeDemographicDataReadableDao {
     /**
      * Retrieve a list of all known zip codes
      * @return - a list of all known zip codes

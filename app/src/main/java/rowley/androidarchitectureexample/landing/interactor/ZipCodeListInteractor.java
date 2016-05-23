@@ -5,8 +5,8 @@ import android.text.format.DateUtils;
 
 import java.util.List;
 
-import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataDao;
-import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataLocalDao;
+import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataReadableDao;
+import rowley.androidarchitectureexample.nycdemographic.dao.ZipCodeDemographicDataWritableDao;
 import rx.Observable;
 import rx.Scheduler;
 import rx.Subscriber;
@@ -22,8 +22,8 @@ public class ZipCodeListInteractor {
     public final static String ZIP_CODE_CACHE_DATE_PREF = "zipCodeCachedDate";
     public final static long ZIP_CODE_CACHE_THRESHOLD = DateUtils.DAY_IN_MILLIS * 5;
 
-    private ZipCodeDemographicDataLocalDao localDao;
-    private ZipCodeDemographicDataDao networkDao;
+    private ZipCodeDemographicDataWritableDao localDao;
+    private ZipCodeDemographicDataReadableDao networkDao;
     private SharedPreferences userDefaultSharedPrefs;
     private ZipCodeListResponseListener responseListener;
 
@@ -37,7 +37,7 @@ public class ZipCodeListInteractor {
      * @param userDefaultSharedPrefs - User default shared preferences, used for tracking last data cache date
      * @param observationScheduler - Which thread do you want to receive result on?
      */
-    public ZipCodeListInteractor(ZipCodeDemographicDataLocalDao localDao, ZipCodeDemographicDataDao networkDao,
+    public ZipCodeListInteractor(ZipCodeDemographicDataWritableDao localDao, ZipCodeDemographicDataReadableDao networkDao,
                                  SharedPreferences userDefaultSharedPrefs, Scheduler observationScheduler) {
         this.localDao = localDao;
         this.networkDao = networkDao;
