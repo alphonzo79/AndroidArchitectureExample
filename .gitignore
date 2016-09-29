@@ -37,3 +37,4 @@ captures/
 *.original
 
 apikeys.xml
+.DS_Store
