@@ -37,6 +37,7 @@ captures/
 .idea/misc.xml
 *.iml
 *.original
+*.orig
 
 apikeys.xml
 .DS_Store
